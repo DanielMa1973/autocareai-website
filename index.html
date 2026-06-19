@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutocareAI — 多伦多华人车主防坑管家</title>
+  <meta name="description" content="买车、修车、保险、停车——多伦多华人新移民的AI驾车助手。免费使用，中文服务，Telegram 直接开聊。">
+  <meta property="og:title" content="AutocareAI — Smart for Cars, Heart for You">
+  <meta property="og:description" content="GTA 华人新移民专属 AI 驾车助手，帮你避开买车、修车、保险、停车的每一个坑。">
+  <meta property="og:url" content="https://autocareai.ca">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0F1E3C;
+      --navy-mid: #1a2d52;
+      --navy-light: #243b6b;
+      --gold: #F5A623;
+      --gold-hover: #f7b540;
+      --white: #ffffff;
+      --bg-soft: #f8f9fb;
+      --text-muted: #6b7280;
+      --border: rgba(0,0,0,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a1a1a;
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 0.5px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-icon svg { width: 18px; height: 18px; }
+
+    .nav-brand-wrap { line-height: 1.2; }
+    .nav-brand { font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; display: block; }
+    .nav-tagline { font-size: 11px; color: var(--text-muted); }
+
+    .nav-cta {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: #1a3060; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,166,35,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 14px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.8px;
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-quote {
+      background: rgba(255,255,255,0.06);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      max-width: 460px;
+      margin: 0 auto 2.5rem;
+      text-align: left;
+    }
+
+    .hero-quote p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-quote-meta {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quote-tag {
+      background: rgba(245,166,35,0.2);
+      color: var(--gold);
+      font-size: 10px;
+      font-style: normal;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 10px;
+      padding: 14px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .hero-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .hero-btn:active { transform: translateY(0); }
+    .hero-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .hero-note {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.85rem;
+    }
+
+    /* ── PAIN ── */
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-soft); }
+
+    .section-header { text-align: center; margin-bottom: 2.5rem; }
+
+    .section-header h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .pain-card {
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+    }
+
+    .pain-icon { font-size: 26px; margin-bottom: 0.85rem; }
+
+    .pain-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .pain-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── MODULES ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .module-card {
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      background: var(--white);
+      transition: box-shadow 0.15s;
+    }
+    .module-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+    .module-card.featured { border-color: var(--gold); border-width: 1.5px; }
+
+    .module-emoji { font-size: 26px; margin-bottom: 0.85rem; }
+
+    .module-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .module-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .module-example {
+      margin-top: 1rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 0.65rem 0.9rem;
+      font-size: 12px;
+      color: var(--navy);
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    /* ── DEMO / CHAT ── */
+    .demo { background: var(--navy); padding: 4rem 2rem; }
+
+    .demo .section-header h2 { color: var(--white); }
+    .demo .section-header p { color: rgba(255,255,255,0.5); }
+
+    .chat-window {
+      background: var(--navy-mid);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: var(--navy-light);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+    }
+
+    .chat-avatar {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .chat-header-info .name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .chat-header-info .status { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 5px; }
+    .status-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+
+    .chat-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 14px; }
+
+    .msg { max-width: 88%; }
+    .msg-bot { align-self: flex-start; }
+    .msg-user { align-self: flex-end; }
+
+    .bubble {
+      border-radius: 14px;
+      padding: 0.7rem 1rem;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .msg-bot .bubble {
+      background: rgba(255,255,255,0.09);
+      color: rgba(255,255,255,0.88);
+      border-bottom-left-radius: 3px;
+    }
+
+    .msg-user .bubble {
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 500;
+      border-bottom-right-radius: 3px;
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: rgba(255,255,255,0.28);
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+
+    .msg-user .msg-time { text-align: right; }
+
+    .highlight { color: var(--gold); font-weight: 600; }
+
+    /* ── CTA ── */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .cta-card {
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    .cta-card.user { background: var(--navy); }
+    .cta-card.partner { background: var(--white); border: 1.5px solid var(--navy); }
+
+    .cta-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .cta-card.user .cta-label { color: rgba(255,255,255,0.45); }
+    .cta-card.partner .cta-label { color: var(--text-muted); }
+
+    .cta-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .cta-card.user h3 { color: var(--white); }
+    .cta-card.partner h3 { color: var(--navy); }
+
+    .cta-card p {
+      font-size: 13px;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+    .cta-card.user p { color: rgba(255,255,255,0.55); }
+    .cta-card.partner p { color: var(--text-muted); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      width: 100%;
+      transition: background 0.15s, transform 0.1s;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-hover); }
+
+    .btn-navy { background: var(--navy); color: var(--white); }
+    .btn-navy:hover { background: #1a3060; }
+
+    /* ── TRUST ── */
+    .trust {
+      padding: 2rem 2rem;
+      background: var(--white);
+      border-top: 0.5px solid var(--border);
+    }
+
+    .trust-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem 2rem;
+      justify-content: center;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .trust-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.38); transition: color 0.15s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0.85rem 1.25rem; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .section { padding: 3rem 1.25rem; }
+      .demo { padding: 3rem 1.25rem; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .trust { padding: 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
+          <circle cx="13" cy="17" r="3"/>
+          <circle cx="21" cy="17" r="3"/>
+          <path d="M13 17h2m4 0h2"/>
+        </svg>
+      </div>
+      <div class="nav-brand-wrap">
+        <span class="nav-brand">AutocareAI</span>
+        <span class="nav-tagline">Smart for Cars, Heart for You</span>
+      </div>
+    </div>
+    <a href="https://t.me/AutocareAI_bot" class="nav-cta">免费试用 →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">多伦多华人新移民专属</div>
+    <h1>买车、修车、保险、停车<br><span>信息差，老哥帮你填</span></h1>
+    <p class="hero-sub">无需下载 App，用 Telegram 直接开聊。20 年 GTA 老司机经验，帮你避开每一个坑。</p>
+
+    <div class="hero-quote">
+      <p>"修车报价单发过去，五分钟告诉我哪里被坑了，还给了我直接跟车行说的英文话术。真的太好用了。"</p>
+      <div class="hero-quote-meta">
+        <span class="quote-tag">用户反馈</span>
+        Markham · 来加拿大 8 个月
+      </div>
+    </div>
+
+    <a href="https://t.me/AutocareAI_bot" class="hero-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/>
+      </svg>
+      Telegram 免费开始使用
+    </a>
+    <p class="hero-note">完全免费 · 中文服务 · 无需注册</p>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section class="section section-alt">
+    <div class="section-header">
+      <h2>新移民买车，到处是坑</h2>
+      <p>不是你不聪明，是信息差太大了</p>
+    </div>
+    <div class="grid-4">
+      <div class="pain-card">
+        <div class="pain-icon">🔧</div>
+        <h3>修车被坑</h3>
+        <p>零件被换成贵的、工时费虚报，英文又看不懂，只能被动接受。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🛡️</div>
+        <h3>保险不知道怎么选</h3>
+        <p>险种看不懂、报价贵不贵心里没数、海外驾龄能折算没人告诉你。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🚗</div>
+        <h3>买车算不清楚</h3>
+        <p>只算了月供，没算保险、冬胎、底盘防锈……买完才发现负担不起。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🅿️</div>
+        <h3>停车罚单一张又一张</h3>
+        <p>标志看不懂、冬季禁令不知道、小区路边随便停——罚款悄悄积累。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="section">
+    <div class="section-header">
+      <h2>四大功能，一个 AI 全搞定</h2>
+      <p>不用懂行，把问题发给老哥就行</p>
+    </div>
+    <div class="grid-2">
+      <div class="module-card featured">
+        <div class="module-emoji">🔧</div>
+        <h3>维修防坑 · 挤水分报告</h3>
+        <p>拍下维修报价单发过来，AI 逐项对比 GTA 基准价，告诉你哪里贵了贵了多少，还给你英文砍价话术。</p>
+        <div class="module-example">"换刹车片报了 $680，老哥说正常价是 $280，帮我省了 $400。"</div>
+      </div>
+      <div class="module-card">
+        <div class="module-emoji">🛡️</div>
+        <h3>保险导航 · 选对买对</h3>
+        <p>新手第一次买险怎么选？报价单贵不贵？怎么省 $300–800/年？全程中文陪你搞懂。</p>
+        <div class="module-example">"告诉老哥有中国驾龄，帮我申请折算，保费直接少了 $600。"</div>
+      </div>
+      <div class="module-card">
+        <div class="module-emoji">🚗</div>
+        <h3>买车计算器 · 算清再买</h3>
+        <p>输入车型，算出月供＋保险＋油费＋保养＋冬胎的真实月成本，避免买完才后悔。</p>
+        <div class="module-example">"二手宝马看起来便宜，老哥算完月成本比新 RAV4 贵 $350。"</div>
+      </div>
+      <div class="module-card">
+        <div class="module-emoji">🅿️</div>
+        <h3>停车助手 · 罚单申诉</h3>
+        <p>拍标志看不懂？发位置帮你找停车位？收到罚单帮你判断能否申诉并给话术。</p>
+        <div class="module-example">"收到 $100 冬季禁令罚单，老哥给了申诉话术，最后成功取消。"</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO CHAT -->
+  <section class="demo">
+    <div class="section-header">
+      <h2>真实对话，你来感受一下</h2>
+      <p>这就是你开始用 AutocareAI 的第一分钟</p>
+    </div>
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="chat-avatar">A</div>
+        <div class="chat-header-info">
+          <div class="name">AutocareAI</div>
+          <div class="status"><span class="status-dot"></span>在线 · 通常几秒内回复</div>
+        </div>
+      </div>
+      <div class="chat-body">
+        <div class="msg msg-bot">
+          <div class="bubble">🚗 朋友你好！老哥是多伦多华人车主的防坑管家，专治四大痛点：维修防坑、保险导航、买车计算、停车助手。你现在遇到哪块问题？</div>
+          <div class="msg-time">AutocareAI · 刚刚</div>
+        </div>
+        <div class="msg msg-user">
+          <div class="bubble">车行说我要换刹车片，报价 $680，不知道贵不贵</div>
+          <div class="msg-time">你 · 刚刚</div>
+        </div>
+        <div class="msg msg-bot">
+          <div class="bubble">🔧 朋友别慌，先告诉老哥是什么车？年份+品牌+型号，有 VIN 码更好。刹车片这个项目老哥门儿清，GTA 正常价差很多，不同车型不一样。</div>
+          <div class="msg-time">AutocareAI · 刚刚</div>
+        </div>
+        <div class="msg msg-user">
+          <div class="bubble">2020 Honda CR-V，跑了 6 万公里</div>
+          <div class="msg-time">你 · 刚刚</div>
+        </div>
+        <div class="msg msg-bot">
+          <div class="bubble">🔴 水分指数：<span class="highlight">严重溢价 +58%</span><br><br>GTA 基准价：前刹车片（零件 $80）+ 工时（1h × $120）= <span class="highlight">$200–$280</span><br><br>你的报价 $680，多了约 $400，零件和工时都虚了。<br><br>英文砍价话术我帮你写好了，发过去直接用 👇</div>
+          <div class="msg-time">AutocareAI · 刚刚</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-alt">
+    <div class="section-header">
+      <h2>现在就开始</h2>
+      <p>用户直接开聊，合作伙伴欢迎联系</p>
+    </div>
+    <div class="cta-grid">
+      <div class="cta-card user">
+        <div class="cta-label">华人车主</div>
+        <h3>免费试用 AutocareAI</h3>
+        <p>Telegram 直接开聊，不用注册，中文服务，完全免费。</p>
+        <a href="https://t.me/AutocareAI_bot" class="btn btn-gold">→ 打开 Telegram 开始聊</a>
+      </div>
+      <div class="cta-card partner">
+        <div class="cta-label">保险经纪 / 车行</div>
+        <h3>合作洽谈</h3>
+        <p>触达 GTA 华人新移民用户群，探索推荐合作模式。</p>
+        <a href="https://wa.me/16476192775" class="btn btn-navy">→ WhatsApp 联系我们</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="trust-items">
+      <div class="trust-item"><span class="trust-dot"></span>完全免费使用</div>
+      <div class="trust-item"><span class="trust-dot"></span>GTA 本地化数据</div>
+      <div class="trust-item"><span class="trust-dot"></span>中文全程服务</div>
+      <div class="trust-item"><span class="trust-dot"></span>不代替专业建议</div>
+      <div class="trust-item"><span class="trust-dot"></span>数据不被出售</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">AutocareAI · Smart for Cars, Heart for You</div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="https://wa.me/16476192775">联系我们</a>
+    </div>
+    <div class="footer-copy">© 2025 AutocareAI · Toronto, Canada</div>
+  </footer>
+
+</body>
+</html>
