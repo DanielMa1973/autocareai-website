@@ -250,5 +250,25 @@
       }
     })();
   <\/script>
-</body>
+<script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.6/libs/oversea/index.js"></script>
+<script>
+  new CozeWebSDK.WebChatClient({
+    config: {
+      bot_id: '7645330677004763189',
+    },
+    componentProps: {
+      title: 'AutocareAI',
+      lang: 'zh-CN',
+    },
+    auth: {
+      type: 'token',
+      token: 'pat_4zOB6G0vICSkbWaWIhTgnUxj3XlnA2rTtvyY2dYGocvm8SqF2835Reu2YwTCJUZ0
+',
+      onRefreshToken: function () {
+        return 'pat_4zOB6G0vICSkbWaWIhTgnUxj3XlnA2rTtvyY2dYGocvm8SqF2835Reu2YwTCJUZ0
+'
+      }
+    }
+  });
+</script></body>
 </html>
