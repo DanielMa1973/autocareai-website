@@ -231,23 +231,65 @@
     <div class="footer-links"><a href="/privacy.html">Privacy Policy</a><a href="https://wa.me/16476192775">联系我们</a></div>
     <div class="footer-copy">© 2025 AutocareAI · Toronto, Canada</div>
   </footer>
-<script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.6/libs/oversea/index.js"></script>
-<script>
-  new CozeWebSDK.WebChatClient({
-    config: {
-      bot_id: '7645330677004763189',
-    },
-    componentProps: {
-      title: 'AutocareAI',
-      lang: 'zh-CN',
-    },
-    auth: {
-      type: 'token',
-      token: 'pat_ehIk1t77aBX2waNiVxyT4vchJhTS9NR10x9A1ZtpqNG21DRttGtI4HUHIbLSxSLP',
-      onRefreshToken: function () {
-      return 'pat_ehIk1t77aBX2waNiVxyT4vchJhTS9NR10x9A1ZtpqNG21DRttGtI4HUHIbLSxSLP'
-      }
+<style>
+  #coze-chat-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+  }
+  #coze-chat-fab button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #0F1E3C;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  #coze-chat-modal {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    width: 380px;
+    height: 560px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+    z-index: 998;
+    border: none;
+  }
+  #coze-chat-modal.open { display: block; }
+  @media (max-width: 480px) {
+    #coze-chat-modal {
+      width: calc(100vw - 16px);
+      height: 70vh;
+      right: 8px;
+      bottom: 80px;
     }
-  });
-</script></body>
+  }
+</style>
+
+<div id="coze-chat-fab">
+  <button onclick="toggleChat()" aria-label="打开客服">💬</button>
+</div>
+<iframe
+  id="coze-chat-modal"
+  src="https://www.coze.com/store/agent/7645330677004763189?bot_id=true"
+  frameborder="0"
+  allow="microphone">
+</iframe>
+
+<script>
+  function toggleChat() {
+    var modal = document.getElementById('coze-chat-modal');
+    modal.classList.toggle('open');
+  }
+</script>
+</body>
 </html>
