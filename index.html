@@ -27,7 +27,9 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     a { text-decoration: none; }
-    #inapp-banner { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #1a1a1a; color: #ffffff; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+
+    /* IN-APP BANNER */
+    #inapp-banner { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #1a1a1a; color: #fff; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
     #inapp-banner.visible { display: block; }
     .inapp-inner { max-width: 480px; margin: 0 auto; display: flex; align-items: flex-start; gap: 12px; }
     .inapp-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
@@ -37,6 +39,8 @@
     .inapp-text p span { background: rgba(245,166,35,0.2); color: #F5A623; border-radius: 3px; padding: 1px 5px; font-weight: 600; white-space: nowrap; }
     .inapp-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; line-height: 1; }
     .inapp-close:hover { color: rgba(255,255,255,0.8); }
+
+    /* NAV */
     nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { display: flex; align-items: center; gap: 10px; }
     .nav-logo-icon { width: 34px; height: 34px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -46,6 +50,8 @@
     .nav-tagline { font-size: 11px; color: var(--text-muted); }
     .nav-cta { background: var(--navy); color: var(--white); border-radius: 8px; padding: 8px 18px; font-size: 14px; font-weight: 600; transition: background 0.15s; }
     .nav-cta:hover { background: #1a3060; }
+
+    /* HERO */
     .hero { background: var(--navy); padding: 5rem 2rem 4rem; text-align: center; }
     .hero-badge { display: inline-block; background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; font-size: 12px; font-weight: 500; padding: 4px 14px; margin-bottom: 1.5rem; }
     .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1.25rem; letter-spacing: -0.8px; }
@@ -59,16 +65,22 @@
     .hero-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
     .hero-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
     .hero-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.85rem; }
+
+    /* SECTIONS */
     .section { padding: 4rem 2rem; }
     .section-alt { background: var(--bg-soft); }
     .section-header { text-align: center; margin-bottom: 2.5rem; }
     .section-header h2 { font-size: clamp(20px, 3vw, 26px); font-weight: 700; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 0.4rem; }
     .section-header p { font-size: 14px; color: var(--text-muted); }
+
+    /* PAIN CARDS */
     .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto; }
     .pain-card { background: var(--white); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.4rem; }
     .pain-icon { font-size: 26px; margin-bottom: 0.85rem; }
     .pain-card h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
     .pain-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+    /* MODULE CARDS */
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto; }
     .module-card { border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem; background: var(--white); transition: box-shadow 0.15s; }
     .module-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
@@ -77,6 +89,8 @@
     .module-card h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
     .module-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
     .module-example { margin-top: 1rem; background: var(--bg-soft); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 0.65rem 0.9rem; font-size: 12px; color: var(--navy); line-height: 1.55; font-style: italic; }
+
+    /* DEMO CHAT */
     .demo { background: var(--navy); padding: 4rem 2rem; }
     .demo .section-header h2 { color: var(--white); }
     .demo .section-header p { color: rgba(255,255,255,0.5); }
@@ -96,6 +110,8 @@
     .msg-time { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 4px; padding: 0 4px; }
     .msg-user .msg-time { text-align: right; }
     .highlight { color: var(--gold); font-weight: 600; }
+
+    /* CTA */
     .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 620px; margin: 0 auto; }
     .cta-card { border-radius: 16px; padding: 2rem 1.5rem; text-align: center; }
     .cta-card.user { background: var(--navy); }
@@ -115,16 +131,42 @@
     .btn-gold:hover { background: var(--gold-hover); }
     .btn-navy { background: var(--navy); color: var(--white); }
     .btn-navy:hover { background: #1a3060; }
+
+    /* TRUST */
     .trust { padding: 2rem; background: var(--white); border-top: 0.5px solid var(--border); }
     .trust-items { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; justify-content: center; }
     .trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-muted); }
     .trust-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+
+    /* FOOTER */
     footer { background: var(--navy); padding: 1.5rem 2rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
     .footer-brand { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
     .footer-links { display: flex; gap: 1.5rem; }
     .footer-links a { font-size: 12px; color: rgba(255,255,255,0.38); transition: color 0.15s; }
     .footer-links a:hover { color: rgba(255,255,255,0.7); }
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* CHAT FAB */
+    #chat-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--navy);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+
+    /* RESPONSIVE */
     @media (max-width: 600px) {
       nav { padding: 0.85rem 1.25rem; }
       .hero { padding: 3.5rem 1.25rem 3rem; }
@@ -136,6 +178,8 @@
   </style>
 </head>
 <body>
+
+  <!-- IN-APP BROWSER BANNER -->
   <div id="inapp-banner" role="alert">
     <div class="inapp-inner">
       <div class="inapp-icon">⚠️</div>
@@ -146,6 +190,8 @@
       <button class="inapp-close" onclick="document.getElementById('inapp-banner').classList.remove('visible')" aria-label="关闭">×</button>
     </div>
   </div>
+
+  <!-- NAV -->
   <nav>
     <div class="nav-logo">
       <div class="nav-logo-icon">
@@ -162,6 +208,8 @@
     </div>
     <a href="https://t.me/AutocareAI_bot" class="nav-cta">免费试用 →</a>
   </nav>
+
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">多伦多华人新移民专属</div>
     <h1>买车、修车、保险、停车<br><span>信息差，老哥帮你填</span></h1>
@@ -176,6 +224,8 @@
     </a>
     <p class="hero-note">完全免费 · 中文服务 · 无需注册</p>
   </section>
+
+  <!-- PAIN POINTS -->
   <section class="section section-alt">
     <div class="section-header"><h2>新移民买车，到处是坑</h2><p>不是你不聪明，是信息差太大了</p></div>
     <div class="grid-4">
@@ -185,6 +235,8 @@
       <div class="pain-card"><div class="pain-icon">🅿️</div><h3>停车罚单一张又一张</h3><p>标志看不懂、冬季禁令不知道、小区路边随便停——罚款悄悄积累。</p></div>
     </div>
   </section>
+
+  <!-- MODULES -->
   <section class="section">
     <div class="section-header"><h2>四大功能，一个 AI 全搞定</h2><p>不用懂行，把问题发给老哥就行</p></div>
     <div class="grid-2">
@@ -194,6 +246,8 @@
       <div class="module-card"><div class="module-emoji">🅿️</div><h3>停车助手 · 罚单申诉</h3><p>拍标志看不懂？发位置帮你找停车位？收到罚单帮你判断能否申诉并给话术。</p><div class="module-example">"收到 $100 冬季禁令罚单，老哥给了申诉话术，最后成功取消。"</div></div>
     </div>
   </section>
+
+  <!-- DEMO CHAT -->
   <section class="demo">
     <div class="section-header"><h2>真实对话，你来感受一下</h2><p>这就是你开始用 AutocareAI 的第一分钟</p></div>
     <div class="chat-window">
@@ -210,6 +264,8 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA -->
   <section class="section section-alt">
     <div class="section-header"><h2>现在就开始</h2><p>用户直接开聊，合作伙伴欢迎联系</p></div>
     <div class="cta-grid">
@@ -217,6 +273,8 @@
       <div class="cta-card partner"><div class="cta-label">保险经纪 / 车行</div><h3>合作洽谈</h3><p>触达 GTA 华人新移民用户群，探索推荐合作模式。</p><a href="https://wa.me/16476192775" class="btn btn-navy">→ WhatsApp 联系我们</a></div>
     </div>
   </section>
+
+  <!-- TRUST -->
   <div class="trust">
     <div class="trust-items">
       <div class="trust-item"><span class="trust-dot"></span>完全免费使用</div>
@@ -226,70 +284,34 @@
       <div class="trust-item"><span class="trust-dot"></span>数据不被出售</div>
     </div>
   </div>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-brand">AutocareAI · Smart for Cars, Heart for You</div>
     <div class="footer-links"><a href="/privacy.html">Privacy Policy</a><a href="https://wa.me/16476192775">联系我们</a></div>
     <div class="footer-copy">© 2025 AutocareAI · Toronto, Canada</div>
   </footer>
-<style>
-  #coze-chat-fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 999;
-  }
-  #coze-chat-fab button {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #0F1E3C;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-  }
-  #coze-chat-modal {
-    display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 24px;
-    width: 380px;
-    height: 560px;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-    z-index: 998;
-    border: none;
-  }
-  #coze-chat-modal.open { display: block; }
-  @media (max-width: 480px) {
-    #coze-chat-modal {
-      width: calc(100vw - 16px);
-      height: 70vh;
-      right: 8px;
-      bottom: 80px;
-    }
-  }
-</style>
 
-<div id="coze-chat-fab">
-  <button onclick="toggleChat()" aria-label="打开客服">💬</button>
-</div>
-<iframe
-  id="coze-chat-modal"
-  src="https://www.coze.com/store/agent/7645330677004763189?bot_id=true"
-  frameborder="0"
-  allow="microphone">
-</iframe>
+  <!-- CHAT FAB -->
+  <a id="chat-fab" href="https://www.coze.com/store/agent/7645330677004763189?bot_id=true" target="_blank" rel="noopener" aria-label="立即咨询">💬</a>
 
-<script>
-  function toggleChat() {
-    var modal = document.getElementById('coze-chat-modal');
-    modal.classList.toggle('open');
-  }
-</script>
+  <!-- IN-APP BROWSER DETECTION -->
+  <script>
+    (function() {
+      var ua = navigator.userAgent || '';
+      var isInApp = /MicroMessenger/i.test(ua) ||
+        /Xiaohongshu/i.test(ua) ||
+        /xhsSpeedApp/i.test(ua) ||
+        /Weibo/i.test(ua) ||
+        /musical_ly/i.test(ua) ||
+        /BytedanceWebview/i.test(ua) ||
+        /FBAN|FBAV/i.test(ua) ||
+        /Instagram/i.test(ua);
+      if (isInApp) {
+        document.getElementById('inapp-banner').classList.add('visible');
+      }
+    })();
+  </script>
+
 </body>
 </html>
