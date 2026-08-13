@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutocareAI — 门店入驻申请</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0F1E3C;
+      --gold: #C9A96E;
+      --gold-light: #e8c98a;
+      --white: #ffffff;
+      --bg: #f8f9fb;
+      --border: #e2e6ea;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --error: #ef4444;
+      --success: #22c55e;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--navy);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,169,110,0.15);
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 18px; height: 18px; }
+    .logo-text .name { font-size: 16px; font-weight: 700; color: var(--white); display: block; }
+    .logo-text .sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+
+    .header-tag {
+      background: rgba(201,169,110,0.15);
+      border: 1px solid rgba(201,169,110,0.3);
+      color: var(--gold);
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--navy);
+      padding: 3rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* PROGRESS */
+    .progress-bar {
+      background: var(--white);
+      border-bottom: 0.5px solid var(--border);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .progress-steps {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .step {
+      flex: 1;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .step.active { background: var(--gold); }
+    .step.done { background: var(--navy); }
+
+    .progress-label {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* FORM CONTAINER */
+    .form-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* SECTION */
+    .form-section {
+      background: var(--white);
+      border-radius: 14px;
+      border: 0.5px solid var(--border);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .section-header {
+      background: var(--navy);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-num {
+      width: 28px; height: 28px;
+      background: rgba(201,169,110,0.2);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .section-title { font-size: 15px; font-weight: 600; color: var(--white); }
+    .section-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+    .section-body { padding: 1.5rem; }
+
+    /* FORM FIELDS */
+    .field { margin-bottom: 1.25rem; }
+
+    .field:last-child { margin-bottom: 0; }
+
+    label.field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .required { color: var(--gold); margin-left: 2px; }
+
+    .field-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,169,110,0.12);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* CHECKBOXES */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .check-item:hover { border-color: var(--gold); background: rgba(201,169,110,0.04); }
+
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] {
+      width: 16px; height: 16px;
+      accent-color: var(--navy);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .check-item span { font-size: 13px; color: var(--text); }
+
+    .check-item:has(input:checked) {
+      border-color: var(--navy);
+      background: rgba(15,30,60,0.05);
+    }
+
+    /* PRICE TABLE */
+    .price-table { width: 100%; border-collapse: collapse; }
+
+    .price-table th {
+      background: #f1f3f5;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+
+    .price-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .price-table tr:nth-child(even) td { background: #fafafa; }
+
+    .price-inputs { display: flex; align-items: center; gap: 6px; }
+
+    .price-inputs input {
+      width: 80px;
+      padding: 6px 10px;
+      text-align: center;
+    }
+
+    .price-dash { color: var(--muted); font-size: 13px; }
+
+    /* QA BLOCK */
+    .qa-block {
+      background: #f8f9fb;
+      border: 0.5px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .qa-block:last-child { margin-bottom: 0; }
+
+    .qa-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    /* SUBMIT */
+    .submit-section {
+      background: var(--white);
+      border-radius: 14px;
+      border: 0.5px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .submit-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .submit-note strong { color: var(--navy); }
+
+    .btn-submit {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: 14px 40px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .btn-submit:hover { background: #1a3060; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* SUCCESS */
+    #success-screen {
+      display: none;
+      max-width: 520px;
+      margin: 3rem auto;
+      background: var(--white);
+      border-radius: 16px;
+      border: 0.5px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .success-icon { font-size: 56px; margin-bottom: 1rem; }
+    .success-title { font-size: 24px; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
+    .success-msg { font-size: 15px; color: var(--muted); line-height: 1.7; }
+    .success-contact { margin-top: 1.5rem; padding: 1rem; background: var(--bg); border-radius: 10px; font-size: 13px; color: var(--navy); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 0.5px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+      .check-grid { grid-template-columns: 1fr 1fr; }
+      .progress-bar { padding: 0.75rem 1rem; }
+      header { padding: 1rem 1.25rem; }
+      .hero { padding: 2rem 1.25rem 3rem; }
+      .section-body { padding: 1.25rem; }
+      .price-inputs input { width: 65px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="https://autocareai.ca" class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="2" stroke-linecap="round">
+        <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
+        <circle cx="13" cy="17" r="3"/><circle cx="21" cy="17" r="3"/>
+        <path d="M13 17h2m4 0h2"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="name">AutocareAI</span>
+      <span class="sub">Smart for Cars, Heart for You</span>
+    </div>
+  </a>
+  <span class="header-tag">B端合作申请</span>
+</header>
+
+<div class="hero">
+  <h1>AI 客服助手 · 门店入驻申请</h1>
+  <p>填写此表后，AutocareAI 团队将在 3 个工作日内为您配置专属 AI 客服，并发送测试链接供您确认。</p>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-steps">
+    <div class="step done" id="step1"></div>
+    <div class="step" id="step2"></div>
+    <div class="step" id="step3"></div>
+    <div class="step" id="step4"></div>
+    <div class="step" id="step5"></div>
+  </div>
+  <span class="progress-label" id="progress-label">第 1 部分 / 共 5 部分</span>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap" id="form-wrap">
+  <form id="onboard-form" action="https://formspree.io/f/meajzqdj" method="POST">
+
+    <!-- SECTION 1 -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <div>
+          <div class="section-title">门店基本信息</div>
+          <div class="section-sub">基础资料，AI 客服将用于自我介绍</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">门店全称（英文）<span class="required">*</span></label>
+          <input type="text" name="shop_name_en" required placeholder="e.g. Hyperfine Autos">
+        </div>
+        <div class="field">
+          <label class="field-label">门店全称（中文，如有）</label>
+          <input type="text" name="shop_name_cn" placeholder="如无可留空">
+        </div>
+        <div class="field">
+          <label class="field-label">门店地址<span class="required">*</span></label>
+          <input type="text" name="address" required placeholder="e.g. 3 Heritage Rd, Unit 3, Markham, ON">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">联系电话<span class="required">*</span></label>
+            <input type="tel" name="phone" required placeholder="e.g. 905-554-0188">
+          </div>
+          <div class="field">
+            <label class="field-label">联系邮箱</label>
+            <input type="email" name="email" placeholder="shop@example.com">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">门店网站</label>
+          <input type="url" name="website" placeholder="https://www.yourshop.com">
+        </div>
+        <div class="field">
+          <label class="field-label">营业时间<span class="required">*</span></label>
+          <input type="text" name="hours" required placeholder="e.g. 周一至周五 9:00–18:00，周六 9:00–17:00，周日休息">
+        </div>
+        <div class="field">
+          <label class="field-label">服务语言</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="lang" value="中文"><span>中文</span></label>
+            <label class="check-item"><input type="checkbox" name="lang" value="英文" checked><span>英文</span></label>
+            <label class="check-item"><input type="checkbox" name="lang" value="粤语"><span>粤语</span></label>
+            <label class="check-item"><input type="checkbox" name="lang" value="韩文"><span>韩文</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">门店简介<span class="required">*</span></label>
+          <div class="field-note">用一两句话描述您店的定位和特色，AI 会用这段话介绍自己</div>
+          <textarea name="intro" required placeholder='例："我们是 Markham 专注德系豪华车的独立维修厂，技师均来自原厂经销商，价格比 4S 店低 30-50%。"'></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <div>
+          <div class="section-title">专业服务范围</div>
+          <div class="section-sub">AI 只推荐您能做的服务</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">主要服务品牌</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="brands" value="BMW"><span>BMW 宝马</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Mercedes-Benz"><span>奔驰</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Audi"><span>Audi 奥迪</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Lexus"><span>Lexus 雷克萨斯</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Toyota"><span>Toyota 丰田</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Honda"><span>Honda 本田</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="Hyundai"><span>Hyundai 现代</span></label>
+            <label class="check-item"><input type="checkbox" name="brands" value="All"><span>所有品牌</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">主要服务项目</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="services" value="发动机维修"><span>发动机维修</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="变速箱维修"><span>变速箱维修</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="刹车系统"><span>刹车系统</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="悬挂转向"><span>悬挂转向</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="空调系统"><span>空调系统</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="电脑诊断"><span>电脑诊断</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="机油更换"><span>机油更换</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="四轮定位"><span>四轮定位</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="冬胎服务"><span>冬胎服务</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="底盘检查"><span>底盘检查</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="钣金喷漆"><span>钣金喷漆</span></label>
+            <label class="check-item"><input type="checkbox" name="services" value="买前检查PPI"><span>买前检查 PPI</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">不接受的车型或服务</label>
+          <div class="field-note">AI 会据此引导客户去更合适的地方，留空表示无限制</div>
+          <textarea name="exclusions" placeholder="例：不接受事故车修复；不做钣金；不接受超过 15 年车龄的车辆"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">接送车服务</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="radio" name="shuttle" value="提供接送"><span>提供接送</span></label>
+            <label class="check-item"><input type="radio" name="shuttle" value="提供代步车"><span>提供代步车</span></label>
+            <label class="check-item"><input type="radio" name="shuttle" value="不提供"><span>不提供</span></label>
+            <label class="check-item"><input type="radio" name="shuttle" value="视情况而定"><span>视情况而定</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3 -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <div>
+          <div class="section-title">价格参考</div>
+          <div class="section-sub">AI 给出区间，并说明需诊断才能精确报价</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">常见项目价格区间（CAD）</label>
+          <div class="field-note">填写您的实际收费范围，不确定的可留空</div>
+          <table class="price-table">
+            <thead>
+              <tr><th>服务项目</th><th>价格区间</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>合成机油更换</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_oil_min" placeholder="60"><span class="price-dash">—</span><span>$</span><input type="text" name="price_oil_max" placeholder="120"></div></td></tr>
+              <tr><td>前刹车片更换</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_brake_pad_min" placeholder="200"><span class="price-dash">—</span><span>$</span><input type="text" name="price_brake_pad_max" placeholder="400"></div></td></tr>
+              <tr><td>前刹车碟更换</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_rotor_min" placeholder="400"><span class="price-dash">—</span><span>$</span><input type="text" name="price_rotor_max" placeholder="700"></div></td></tr>
+              <tr><td>电脑诊断</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_diag_min" placeholder="80"><span class="price-dash">—</span><span>$</span><input type="text" name="price_diag_max" placeholder="120"></div></td></tr>
+              <tr><td>四轮定位</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_align_min" placeholder="100"><span class="price-dash">—</span><span>$</span><input type="text" name="price_align_max" placeholder="130"></div></td></tr>
+              <tr><td>冬胎换装（带轮毂）</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_tire_min" placeholder="60"><span class="price-dash">—</span><span>$</span><input type="text" name="price_tire_max" placeholder="80"></div></td></tr>
+              <tr><td>变速箱油更换</td><td><div class="price-inputs"><span>$</span><input type="text" name="price_trans_min" placeholder="250"><span class="price-dash">—</span><span>$</span><input type="text" name="price_trans_max" placeholder="400"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="field" style="margin-top:1rem;">
+          <label class="field-label">定价说明</label>
+          <div class="field-note">您希望 AI 如何介绍您的价格定位？</div>
+          <textarea name="pricing_note" placeholder='例："我们的价格比 4S 店低 30–50%，但使用与原厂相同的零件和技术标准，只修需要修的。"'></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <div>
+          <div class="section-title">常见问题 & 标准回答</div>
+          <div class="section-sub">越详细，AI 越接近您的真实服务风格</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="qa-block">
+          <div class="qa-num">Q1 · 最常被问到的第一个问题</div>
+          <div class="field">
+            <label class="field-label">客户的问题</label>
+            <input type="text" name="q1" placeholder="例：你们比 4S 店便宜在哪里？">
+          </div>
+          <div class="field">
+            <label class="field-label">您希望 AI 怎么回答</label>
+            <textarea name="a1" placeholder="例：我们的技师都来自原厂授权经销商，技术水平一样高，但运营成本更低。我们只换需要换的零件，价格透明，通常比 4S 店低 30-50%。"></textarea>
+          </div>
+        </div>
+        <div class="qa-block">
+          <div class="qa-num">Q2 · 最常被问到的第二个问题</div>
+          <div class="field">
+            <label class="field-label">客户的问题</label>
+            <input type="text" name="q2" placeholder="例：需要预约吗？还是可以直接过来？">
+          </div>
+          <div class="field">
+            <label class="field-label">您希望 AI 怎么回答</label>
+            <textarea name="a2" placeholder="例：建议提前预约，这样我们可以为您准备好零件，减少等待时间。但如果您有紧急情况，也欢迎直接上门，我们会尽力安排。"></textarea>
+          </div>
+        </div>
+        <div class="qa-block">
+          <div class="qa-num">Q3 · 最常被问到的第三个问题</div>
+          <div class="field">
+            <label class="field-label">客户的问题</label>
+            <input type="text" name="q3" placeholder="例：维修完之后有保修吗？">
+          </div>
+          <div class="field">
+            <label class="field-label">您希望 AI 怎么回答</label>
+            <textarea name="a3" placeholder="例：我们的维修提供...个月/...公里保修，零件和工时都包含在内。具体保修范围视项目而定，欢迎来店详询。"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">需要回避或谨慎处理的话题</label>
+          <div class="field-note">AI 遇到这类话题会引导客户直接联系您</div>
+          <textarea name="sensitive" placeholder="例：不要比较具体竞争对手；不要承诺具体完工时间；价格不做任何保证，需现场诊断后报价"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5 -->
+    <div class="form-section">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <div>
+          <div class="section-title">AI 风格与预约方式</div>
+          <div class="section-sub">让 AI 更贴近您的品牌形象</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field">
+          <label class="field-label">AI 客服的整体风格</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="radio" name="style" value="专业严谨"><span>专业严谨</span></label>
+            <label class="check-item"><input type="radio" name="style" value="亲切友好" checked><span>亲切友好</span></label>
+            <label class="check-item"><input type="radio" name="style" value="简洁高效"><span>简洁高效</span></label>
+            <label class="check-item"><input type="radio" name="style" value="耐心细致"><span>耐心细致</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">AI 主动引导预约的频率</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="radio" name="booking_push" value="每次都引导"><span>每次都引导</span></label>
+            <label class="check-item"><input type="radio" name="booking_push" value="相关话题时引导" checked><span>相关话题时引导</span></label>
+            <label class="check-item"><input type="radio" name="booking_push" value="不主动引导"><span>不主动引导</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">预约方式（可多选）</label>
+          <div class="check-grid">
+            <label class="check-item"><input type="checkbox" name="booking_method" value="电话预约"><span>电话预约</span></label>
+            <label class="check-item"><input type="checkbox" name="booking_method" value="微信预约"><span>微信预约</span></label>
+            <label class="check-item"><input type="checkbox" name="booking_method" value="网站表单"><span>网站表单</span></label>
+            <label class="check-item"><input type="checkbox" name="booking_method" value="直接上门"><span>直接上门</span></label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label">微信号</label>
+            <input type="text" name="wechat" placeholder="如有">
+          </div>
+          <div class="field">
+            <label class="field-label">WhatsApp</label>
+            <input type="tel" name="whatsapp" placeholder="如有">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label">当前促销活动或特别优惠</label>
+          <textarea name="promotions" placeholder="例：2025年10月前，换冬胎送免费四轮定位检查"></textarea>
+        </div>
+        <div class="field">
+          <label class="field-label">其他希望 AI 特别注意的事项</label>
+          <textarea name="notes" placeholder="任何您认为重要的补充信息"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-section">
+      <p class="submit-note">
+        提交后，<strong>AutocareAI 团队</strong>将在 <strong>3 个工作日</strong>内为您配置专属 AI 客服助手，并发送测试链接供您体验和确认。<br><br>
+        如有紧急需求，可直接联系：<strong>WhatsApp +1 (647) 619-2775</strong>
+      </p>
+      <button type="submit" class="btn-submit" id="submit-btn">提交门店信息 →</button>
+    </div>
+
+  </form>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div id="success-screen">
+  <div class="success-icon">🎉</div>
+  <div class="success-title">提交成功！</div>
+  <p class="success-msg">我们已收到您的门店信息，AutocareAI 团队将在 3 个工作日内完成配置，并发送专属测试链接给您体验。</p>
+  <div class="success-contact">
+    有任何问题请联系：<strong>WhatsApp +1 (647) 619-2775</strong><br>
+    或邮件：<strong>daniel@autocareai.ca</strong>
+  </div>
+</div>
+
+<footer>
+  © 2025 AutocareAI · <a href="/privacy.html" style="color:inherit;">Privacy Policy</a> · Smart for Cars, Heart for You
+</footer>
+
+<script>
+  // Progress tracking
+  const sections = document.querySelectorAll('.form-section');
+  const steps = document.querySelectorAll('.step');
+  const progressLabel = document.getElementById('progress-label');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(sections).indexOf(entry.target);
+        steps.forEach((step, i) => {
+          step.className = 'step' + (i < idx ? ' done' : i === idx ? ' active' : '');
+        });
+        progressLabel.textContent = `第 ${idx + 1} 部分 / 共 5 部分`;
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Form submission
+  const form = document.getElementById('onboard-form');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = '提交中...';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (res.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success-screen').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交失败，请重试';
+      }
+    } catch {
+      submitBtn.disabled = false;
+      submitBtn.textContent = '网络错误，请重试';
+    }
+  });
+</script>
+
+</body>
+</html>
