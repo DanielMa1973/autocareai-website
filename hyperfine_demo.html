@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyperfine Autos — Premium European Auto Repair, Markham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --dark: #111111;
+      --card: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --gold: #c9a96e;
+      --gold-light: #e8c98a;
+      --white: #ffffff;
+      --text: rgba(255,255,255,0.88);
+      --muted: rgba(255,255,255,0.45);
+      --chat-bg: #18181b;
+      --chat-user: #2a2a2e;
+      --chat-bot: #1f1f24;
+    }
+
+    body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--text); line-height: 1.6; }
+
+    /* NAV */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); z-index: 50; }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo-mark { width: 36px; height: 36px; border: 1.5px solid var(--gold); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--gold); letter-spacing: 1px; }
+    .logo-text .name { font-size: 16px; font-weight: 600; color: var(--white); letter-spacing: 0.5px; }
+    .logo-text .sub { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+    nav ul { display: flex; gap: 2rem; list-style: none; }
+    nav ul a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.3px; transition: color 0.2s; }
+    nav ul a:hover { color: var(--white); }
+    .nav-cta { background: transparent; border: 0.5px solid var(--gold); color: var(--gold); padding: 8px 20px; border-radius: 4px; font-size: 13px; cursor: pointer; font-family: inherit; transition: all 0.2s; letter-spacing: 0.3px; }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* HERO */
+    .hero { padding: 7rem 3rem 6rem; max-width: 680px; }
+    .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 300; color: var(--white); line-height: 1.1; letter-spacing: -1px; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: normal; font-weight: 600; }
+    .hero p { font-size: 16px; color: var(--muted); line-height: 1.8; max-width: 500px; margin-bottom: 2.5rem; }
+    .hero-btns { display: flex; gap: 12px; }
+    .btn-primary { background: var(--gold); color: var(--black); border: none; padding: 13px 28px; border-radius: 4px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s; letter-spacing: 0.3px; }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-ghost { background: transparent; color: var(--white); border: 0.5px solid var(--border); padding: 13px 28px; border-radius: 4px; font-size: 14px; cursor: pointer; font-family: inherit; transition: border-color 0.2s; letter-spacing: 0.3px; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+    /* DIVIDER */
+    .divider { height: 0.5px; background: var(--border); margin: 0 3rem; }
+
+    /* SERVICES */
+    .services { padding: 5rem 3rem; }
+    .section-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 3rem; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .service-item { padding: 2rem; background: var(--card); }
+    .service-item:not(:last-child) { border-right: 0.5px solid var(--border); }
+    .service-num { font-size: 11px; color: var(--gold); letter-spacing: 2px; margin-bottom: 1rem; }
+    .service-item h3 { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 0.5rem; }
+    .service-item p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* INFO STRIP */
+    .info-strip { display: flex; gap: 3rem; padding: 2rem 3rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+    .info-item { display: flex; flex-direction: column; gap: 4px; }
+    .info-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .info-value { font-size: 14px; color: var(--white); }
+
+    /* DEMO BADGE */
+    .demo-badge { position: fixed; top: 80px; right: 20px; background: var(--gold); color: var(--black); font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px; z-index: 200; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+    /* CHAT BUBBLE */
+    #chat-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 58px;
+      height: 58px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 24px rgba(201,169,110,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+    }
+    #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 32px rgba(201,169,110,0.5); }
+    #chat-fab svg { width: 24px; height: 24px; }
+
+    /* CHAT WINDOW */
+    #chat-window {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      width: 360px;
+      height: 520px;
+      background: var(--chat-bg);
+      border-radius: 16px;
+      border: 0.5px solid rgba(255,255,255,0.1);
+      display: none;
+      flex-direction: column;
+      z-index: 99;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    #chat-window.open { display: flex; }
+
+    .chat-header {
+      padding: 1rem 1.25rem;
+      background: #111113;
+      border-bottom: 0.5px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-avatar {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      flex-shrink: 0;
+    }
+    .chat-header-info .hname { font-size: 14px; font-weight: 600; color: var(--white); }
+    .chat-header-info .hstatus { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+    .status-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 12px; }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .msg { max-width: 85%; }
+    .msg-bot { align-self: flex-start; }
+    .msg-user { align-self: flex-end; }
+
+    .bubble {
+      padding: 0.65rem 0.9rem;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .msg-bot .bubble { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.88); border-bottom-left-radius: 3px; }
+    .msg-user .bubble { background: var(--gold); color: var(--black); font-weight: 500; border-bottom-right-radius: 3px; }
+    .msg-time { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; padding: 0 4px; }
+    .msg-user .msg-time { text-align: right; }
+
+    .typing-indicator { align-self: flex-start; }
+    .typing-dots { display: flex; gap: 4px; padding: 0.65rem 0.9rem; background: rgba(255,255,255,0.07); border-radius: 12px; border-bottom-left-radius: 3px; }
+    .typing-dots span { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: bounce 1.2s infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+
+    .quick-replies { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    .quick-reply { background: rgba(201,169,110,0.12); border: 0.5px solid rgba(201,169,110,0.3); color: var(--gold); font-size: 12px; padding: 7px 12px; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit; transition: background 0.15s; }
+    .quick-reply:hover { background: rgba(201,169,110,0.22); }
+
+    .chat-input-area {
+      padding: 0.75rem 1rem;
+      border-top: 0.5px solid rgba(255,255,255,0.08);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .chat-input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 13px;
+      color: var(--white);
+      font-family: inherit;
+      outline: none;
+      resize: none;
+    }
+    .chat-input::placeholder { color: rgba(255,255,255,0.25); }
+    .chat-input:focus { border-color: rgba(201,169,110,0.4); }
+    .send-btn {
+      width: 34px;
+      height: 34px;
+      background: var(--gold);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .send-btn:hover { background: var(--gold-light); }
+    .send-btn svg { width: 16px; height: 16px; color: var(--black); }
+    .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .powered-by { text-align: center; font-size: 10px; color: rgba(255,255,255,0.2); padding: 4px 0 8px; letter-spacing: 0.5px; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .services { padding: 3rem 1.5rem; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-item:not(:last-child) { border-right: none; border-bottom: 0.5px solid var(--border); }
+      .info-strip { padding: 1.5rem; flex-wrap: wrap; gap: 1.5rem; }
+      #chat-window { width: calc(100vw - 40px); right: 20px; }
+      .divider { margin: 0 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-badge">DEMO — AutocareAI</div>
+
+  <nav>
+    <div class="logo">
+      <div class="logo-mark">HF</div>
+      <div class="logo-text">
+        <div class="name">Hyperfine Autos</div>
+        <div class="sub">Markham, Ontario</div>
+      </div>
+    </div>
+    <ul>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Reviews</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <button class="nav-cta">Book Appointment</button>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Est. 2015 · Markham, Ontario</div>
+    <h1>European auto care,<br><em>done right.</em></h1>
+    <p>Dealer-certified technicians from Audi, BMW, and Mercedes-Benz. Dealer-level quality at independent shop pricing. We only fix what needs fixing.</p>
+    <div class="hero-btns">
+      <button class="btn-primary">Book a Service</button>
+      <button class="btn-ghost">905-554-0188</button>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="info-strip">
+    <div class="info-item">
+      <span class="info-label">Specialization</span>
+      <span class="info-value">Audi · BMW · Mercedes-Benz</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Hours</span>
+      <span class="info-value">Mon–Fri 9–6 · Sat 9–5</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Address</span>
+      <span class="info-value">3 Heritage Rd, Unit 3, Markham</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Experience</span>
+      <span class="info-value">Original dealer certified</span>
+    </div>
+  </div>
+
+  <section class="services">
+    <div class="section-label">What we do</div>
+    <div class="service-grid">
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <h3>Diagnostics & Repair</h3>
+        <p>Factory-level computer diagnostics for BMW, Mercedes, and Audi. We read what the dealer reads.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <h3>Maintenance & Service</h3>
+        <p>Oil changes, brake service, tire rotation, and all scheduled maintenance — using OEM-spec fluids and parts.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <h3>Seasonal Service</h3>
+        <p>Winter tire mounting with Hunter balancing machines, alignment, and full seasonal inspection.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAT FAB -->
+  <button id="chat-fab" onclick="toggleChat()" aria-label="Chat with us">
+    <svg id="fab-icon-chat" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <svg id="fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="round" style="display:none;">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </button>
+
+  <!-- CHAT WINDOW -->
+  <div id="chat-window">
+    <div class="chat-header">
+      <div class="chat-avatar">HF</div>
+      <div class="chat-header-info">
+        <div class="hname">Hyperfine Autos</div>
+        <div class="hstatus"><span class="status-dot"></span>AI Assistant · Online</div>
+      </div>
+    </div>
+
+    <div class="chat-messages" id="messages"></div>
+
+    <div class="chat-input-area">
+      <input class="chat-input" id="chat-input" placeholder="Ask about services, pricing, booking…" onkeydown="handleKey(event)">
+      <button class="send-btn" id="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="powered-by">Powered by AutocareAI</div>
+  </div>
+
+  <script>
+    const SYSTEM_PROMPT = `You are the AI customer service assistant for Hyperfine Autos, a premium European auto repair shop in Markham, Ontario, Canada.
+
+About Hyperfine Autos:
+- Founded 2015 by experts from Audi, BMW, and Mercedes-Benz dealerships
+- Specialty: High-end repairs and maintenance for Audi, BMW, and Mercedes-Benz
+- All technicians are certified from original authorized dealers
+- Philosophy: Only repair what needs repairing, transparent and fair pricing
+- Slogan: "We Care What You Care"
+- Address: 3 Heritage Rd, Unit 3, Markham, ON L3P 1M3
+- Phone: 905-554-0188
+- Hours: Monday–Friday 9:00 AM–6:00 PM, Saturday 9:00 AM–5:00 PM, Sunday closed
+- Amenities: Free WiFi, customer lounge, weekend hours
+
+Services offered:
+- Computer diagnostics (factory-level)
+- Engine and transmission repair
+- Brake service (pads, rotors, calipers)
+- Oil changes (synthetic, OEM-spec fluids)
+- Suspension and steering
+- Air conditioning service
+- Tire mounting and balancing (Hunter machines)
+- Four-wheel alignment
+- All scheduled maintenance
+- Pre-purchase inspections
+
+Approximate price ranges (GTA market, always clarify exact pricing requires diagnosis):
+- Synthetic oil change: $120–$180 (vs $200–$350 at dealer)
+- Front brake pads + rotors: $500–$800 (vs $1,000–$1,500 at dealer)
+- Diagnostic scan: $80–$120 (vs $150–$200 at dealer)
+- Tire swap with own rims: $60–$80
+- Wheel alignment: $100–$130
+
+Language: Respond in the same language the user writes in. Chinese speakers should receive Chinese responses, English speakers English. Be warm, professional, and knowledgeable. Keep responses concise and helpful. Always end by inviting them to call or book an appointment if appropriate. Never make up specific prices — give ranges and note that exact quotes require inspection.`;
+
+    const conversationHistory = [];
+    let isTyping = false;
+
+    function toggleChat() {
+      const win = document.getElementById('chat-window');
+      const iconChat = document.getElementById('fab-icon-chat');
+      const iconClose = document.getElementById('fab-icon-close');
+      const isOpen = win.classList.toggle('open');
+      iconChat.style.display = isOpen ? 'none' : 'block';
+      iconClose.style.display = isOpen ? 'block' : 'none';
+      if (isOpen && document.getElementById('messages').children.length === 0) {
+        initChat();
+      }
+      if (isOpen) {
+        setTimeout(() => document.getElementById('chat-input').focus(), 300);
+      }
+    }
+
+    function initChat() {
+      const greeting = `Hi! I'm the AI assistant for Hyperfine Autos. We specialize in Audi, BMW, and Mercedes-Benz — with technicians who came from the original dealerships.\n\nHow can I help you today?`;
+      addBotMessage(greeting, [
+        "How does your pricing compare to the dealer?",
+        "I need my BMW brakes checked",
+        "我的奔驰需要保养，大概多少钱？",
+        "Do you do pre-purchase inspections?"
+      ]);
+    }
+
+    function addBotMessage(text, quickReplies) {
+      const msgs = document.getElementById('messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg msg-bot';
+      msgDiv.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div><div class="msg-time">Hyperfine Autos · just now</div>`;
+      msgs.appendChild(msgDiv);
+      if (quickReplies && quickReplies.length > 0) {
+        const qr = document.createElement('div');
+        qr.className = 'msg msg-bot';
+        const qrDiv = document.createElement('div');
+        qrDiv.className = 'quick-replies';
+        quickReplies.forEach(reply => {
+          const btn = document.createElement('button');
+          btn.className = 'quick-reply';
+          btn.textContent = reply;
+          btn.onclick = () => { qrDiv.remove(); qr.remove(); handleQuickReply(reply); };
+          qrDiv.appendChild(btn);
+        });
+        qr.appendChild(qrDiv);
+        msgs.appendChild(qr);
+      }
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function addUserMessage(text) {
+      const msgs = document.getElementById('messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg msg-user';
+      msgDiv.innerHTML = `<div class="bubble">${text}</div><div class="msg-time">You · just now</div>`;
+      msgs.appendChild(msgDiv);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function showTyping() {
+      const msgs = document.getElementById('messages');
+      const typing = document.createElement('div');
+      typing.className = 'msg msg-bot typing-indicator';
+      typing.id = 'typing';
+      typing.innerHTML = `<div class="typing-dots"><span></span><span></span><span></span></div>`;
+      msgs.appendChild(typing);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function hideTyping() {
+      const t = document.getElementById('typing');
+      if (t) t.remove();
+    }
+
+    async function handleQuickReply(text) {
+      addUserMessage(text);
+      await callAPI(text);
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text || isTyping) return;
+      input.value = '';
+      addUserMessage(text);
+      await callAPI(text);
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    async function callAPI(userMessage) {
+      isTyping = true;
+      document.getElementById('send-btn').disabled = true;
+      conversationHistory.push({ role: 'user', content: userMessage });
+      showTyping();
+      try {
+        const response = await fetch('https://autocareai-api.dalinma49.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 1000,
+            system: SYSTEM_PROMPT,
+            messages: conversationHistory
+          })
+        });
+        const data = await response.json();
+        hideTyping();
+        const reply = data.content?.[0]?.text || "I'm sorry, I couldn't process that. Please call us at 905-554-0188.";
+        conversationHistory.push({ role: 'assistant', content: reply });
+        addBotMessage(reply);
+      } catch (err) {
+        hideTyping();
+        addBotMessage("Sorry, I'm having trouble connecting right now. Please call us directly at 905-554-0188 — we're happy to help!");
+      }
+      isTyping = false;
+      document.getElementById('send-btn').disabled = false;
+      document.getElementById('chat-input').focus();
+    }
+  </script>
+
+</body>
+</html>
