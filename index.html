@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutocareAI — 多伦多华人车主防坑管家</title>
-  <meta name="description" content="买车、修车、保险、停车——多伦多华人新移民的AI驾车助手。免费使用，中文服务，Telegram 直接开聊。">
+  <meta name="description" content="买车、修车、保险、停车——多伦多华人新移民的AI驾车助手。免费使用，中文服务，直接开聊。">
   <meta property="og:title" content="AutocareAI — Smart for Cars, Heart for You">
   <meta property="og:description" content="GTA 华人新移民专属 AI 驾车助手，帮你避开买车、修车、保险、停车的每一个坑。">
   <meta property="og:url" content="https://autocareai.ca">
@@ -41,15 +41,19 @@
     .inapp-close:hover { color: rgba(255,255,255,0.8); }
 
     /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .nav-logo-icon { width: 34px; height: 34px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .nav-logo-icon svg { width: 18px; height: 18px; }
     .nav-brand-wrap { line-height: 1.2; }
     .nav-brand { font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; display: block; }
     .nav-tagline { font-size: 11px; color: var(--text-muted); }
-    .nav-cta { background: var(--navy); color: var(--white); border-radius: 8px; padding: 8px 18px; font-size: 14px; font-weight: 600; transition: background 0.15s; }
-    .nav-cta:hover { background: #1a3060; }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { font-size: 13px; color: var(--text-muted); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--navy); }
+    .nav-links a.highlight { color: var(--navy); font-weight: 600; }
+    .nav-cta { background: var(--gold); color: var(--navy); border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; transition: background 0.15s; flex-shrink: 0; }
+    .nav-cta:hover { background: var(--gold-hover); }
 
     /* HERO */
     .hero { background: var(--navy); padding: 5rem 2rem 4rem; text-align: center; }
@@ -61,7 +65,7 @@
     .hero-quote p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.7; font-style: italic; margin-bottom: 0.75rem; }
     .hero-quote-meta { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; }
     .quote-tag { background: rgba(245,166,35,0.2); color: var(--gold); font-size: 10px; font-style: normal; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
-    .hero-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 28px; font-size: 15px; font-weight: 700; transition: background 0.15s, transform 0.1s; }
+    .hero-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 28px; font-size: 15px; font-weight: 700; transition: background 0.15s, transform 0.1s; border: none; cursor: pointer; font-family: inherit; }
     .hero-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
     .hero-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
     .hero-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.85rem; }
@@ -111,6 +115,20 @@
     .msg-user .msg-time { text-align: right; }
     .highlight { color: var(--gold); font-weight: 600; }
 
+    /* B-END SECTION */
+    .biz-section { background: var(--navy); padding: 4rem 2rem; }
+    .biz-section .section-header h2 { color: var(--white); }
+    .biz-section .section-header p { color: rgba(255,255,255,0.5); }
+    .biz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto 2.5rem; }
+    .biz-card { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.5rem; }
+    .biz-icon { font-size: 26px; margin-bottom: 0.75rem; }
+    .biz-card h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+    .biz-card p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+    .biz-cta { text-align: center; }
+    .biz-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 700; transition: background 0.15s, transform 0.1s; }
+    .biz-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .biz-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.75rem; }
+
     /* CTA */
     .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 620px; margin: 0 auto; }
     .cta-card { border-radius: 16px; padding: 2rem 1.5rem; text-align: center; }
@@ -147,33 +165,58 @@
     .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
 
     /* CHAT FAB */
-    #chat-fab {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 999;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: var(--navy);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      text-decoration: none;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(0,0,0,0.35); }
+    #chat-fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(245,166,35,0.4); border: none; font-size: 24px; transition: transform 0.2s, box-shadow 0.2s; }
+    #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(245,166,35,0.5); }
+
+    /* CHAT WINDOW */
+    #chat-window { position: fixed; bottom: 92px; right: 24px; width: 360px; height: 520px; background: var(--navy-mid); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 16px; display: none; flex-direction: column; z-index: 99; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
+    #chat-window.open { display: flex; }
+    .cw-header { background: var(--navy-light); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 10px; border-bottom: 0.5px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+    .cw-avatar { width: 34px; height: 34px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--navy); flex-shrink: 0; }
+    .cw-info .cw-name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .cw-info .cw-status { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 5px; }
+    .cw-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+    .cw-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 12px; }
+    .cw-messages::-webkit-scrollbar { width: 3px; }
+    .cw-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    .cw-msg { max-width: 88%; }
+    .cw-bot { align-self: flex-start; }
+    .cw-user { align-self: flex-end; }
+    .cw-bubble { border-radius: 14px; padding: 0.65rem 0.9rem; font-size: 13px; line-height: 1.6; }
+    .cw-bot .cw-bubble { background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.88); border-bottom-left-radius: 3px; }
+    .cw-user .cw-bubble { background: var(--gold); color: var(--navy); font-weight: 500; border-bottom-right-radius: 3px; }
+    .cw-time { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; padding: 0 4px; }
+    .cw-user .cw-time { text-align: right; }
+    .cw-typing { align-self: flex-start; }
+    .cw-dots { display: flex; gap: 4px; padding: 0.65rem 0.9rem; background: rgba(255,255,255,0.09); border-radius: 14px; border-bottom-left-radius: 3px; }
+    .cw-dots span { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: bounce 1.2s infinite; }
+    .cw-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .cw-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .cw-quick { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    .cw-qr { background: rgba(245,166,35,0.12); border: 0.5px solid rgba(245,166,35,0.3); color: var(--gold); font-size: 12px; padding: 7px 12px; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit; transition: background 0.15s; }
+    .cw-qr:hover { background: rgba(245,166,35,0.22); }
+    .cw-input-area { padding: 0.75rem 1rem; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .cw-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: var(--white); font-family: inherit; outline: none; }
+    .cw-input::placeholder { color: rgba(255,255,255,0.25); }
+    .cw-input:focus { border-color: rgba(245,166,35,0.4); }
+    .cw-send { width: 34px; height: 34px; background: var(--gold); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s; }
+    .cw-send:hover { background: var(--gold-hover); }
+    .cw-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .cw-send svg { width: 15px; height: 15px; color: var(--navy); }
+    .cw-powered { text-align: center; font-size: 10px; color: rgba(255,255,255,0.2); padding: 4px 0 8px; }
 
     /* RESPONSIVE */
     @media (max-width: 600px) {
       nav { padding: 0.85rem 1.25rem; }
+      .nav-links { display: none; }
       .hero { padding: 3.5rem 1.25rem 3rem; }
       .section { padding: 3rem 1.25rem; }
       .demo { padding: 3rem 1.25rem; }
+      .biz-section { padding: 3rem 1.25rem; }
       footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
       .trust { padding: 1.5rem 1.25rem; }
+      #chat-window { width: calc(100vw - 32px); right: 16px; bottom: 88px; height: 65vh; }
     }
   </style>
 </head>
@@ -184,8 +227,8 @@
     <div class="inapp-inner">
       <div class="inapp-icon">⚠️</div>
       <div class="inapp-text">
-        <strong>请用系统浏览器打开，才能跳转 Telegram</strong>
-        <p>当前是在 App 内置浏览器中浏览，无法直接打开 Telegram。<br>请点右上角 <span>⋯ 更多</span> → 选择 <span>在浏览器中打开</span>，再点击使用按钮。</p>
+        <strong>建议用系统浏览器打开，体验更流畅</strong>
+        <p>点右上角 <span>⋯ 更多</span> → 选择 <span>在浏览器中打开</span></p>
       </div>
       <button class="inapp-close" onclick="document.getElementById('inapp-banner').classList.remove('visible')" aria-label="关闭">×</button>
     </div>
@@ -206,27 +249,31 @@
         <span class="nav-tagline">Smart for Cars, Heart for You</span>
       </div>
     </div>
-    <a href="https://t.me/AutocareAI_bot" class="nav-cta">免费试用 →</a>
+    <div class="nav-links">
+      <a href="#features">功能介绍</a>
+      <a href="#biz" class="highlight">商家合作</a>
+    </div>
+    <a href="/onboard.html" class="nav-cta">门店入驻 →</a>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-badge">多伦多华人新移民专属</div>
     <h1>买车、修车、保险、停车<br><span>信息差，老哥帮你填</span></h1>
-    <p class="hero-sub">无需下载 App，用 Telegram 直接开聊。20 年 GTA 老司机经验，帮你避开每一个坑。</p>
+    <p class="hero-sub">无需下载 App，直接在网页开聊。20 年 GTA 老司机经验，帮你避开每一个坑。</p>
     <div class="hero-quote">
       <p>"修车报价单发过去，五分钟告诉我哪里被坑了，还给了我直接跟车行说的英文话术。真的太好用了。"</p>
       <div class="hero-quote-meta"><span class="quote-tag">用户反馈</span>Markham · 来加拿大 8 个月</div>
     </div>
-    <a href="https://t.me/AutocareAI_bot" class="hero-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
-      Telegram 免费开始使用
-    </a>
+    <button class="hero-btn" onclick="openChat()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      立即免费咨询
+    </button>
     <p class="hero-note">完全免费 · 中文服务 · 无需注册</p>
   </section>
 
   <!-- PAIN POINTS -->
-  <section class="section section-alt">
+  <section class="section section-alt" id="features">
     <div class="section-header"><h2>新移民买车，到处是坑</h2><p>不是你不聪明，是信息差太大了</p></div>
     <div class="grid-4">
       <div class="pain-card"><div class="pain-icon">🔧</div><h3>修车被坑</h3><p>零件被换成贵的、工时费虚报，英文又看不懂，只能被动接受。</p></div>
@@ -260,8 +307,26 @@
         <div class="msg msg-user"><div class="bubble">车行说我要换刹车片，报价 $680，不知道贵不贵</div><div class="msg-time">你 · 刚刚</div></div>
         <div class="msg msg-bot"><div class="bubble">🔧 朋友别慌，先告诉老哥是什么车？年份+品牌+型号，有 VIN 码更好。刹车片这个项目老哥门儿清，GTA 正常价差很多，不同车型不一样。</div><div class="msg-time">AutocareAI · 刚刚</div></div>
         <div class="msg msg-user"><div class="bubble">2020 Honda CR-V，跑了 6 万公里</div><div class="msg-time">你 · 刚刚</div></div>
-        <div class="msg msg-bot"><div class="bubble">🔴 水分指数：<span class="highlight">严重溢价 +58%</span><br><br>GTA 基准价：前刹车片（零件 $80）+ 工时（1h × $120）= <span class="highlight">$200–$280</span><br><br>你的报价 $680，多了约 $400，零件和工时都虚了。<br><br>英文砍价话术我帮你写好了，发过去直接用 👇</div><div class="msg-time">AutocareAI · 刚刚</div></div>
+        <div class="msg msg-bot"><div class="bubble">🔴 水分指数：<span class="highlight">严重溢价 +58%</span><br><br>GTA 基准价：前刹车片（零件 $80）+ 工时（1h × $120）= <span class="highlight">$200–$280</span><br><br>你的报价 $680，多了约 $400，零件和工时都虚了。英文砍价话术我帮你写好了 👇</div><div class="msg-time">AutocareAI · 刚刚</div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- B-END SECTION -->
+  <section class="biz-section" id="biz">
+    <div class="section-header">
+      <h2>为您的门店配置 AI 客服</h2>
+      <p>帮助华人车主更好地了解您的服务，引导预约，提升转化</p>
+    </div>
+    <div class="biz-grid">
+      <div class="biz-card"><div class="biz-icon">🌐</div><h3>中英双语接待</h3><p>自动识别用户语言，中文英文无缝切换，不让任何一个客户因语言问题流失。</p></div>
+      <div class="biz-card"><div class="biz-icon">📅</div><h3>24小时引导预约</h3><p>非营业时间也能回答客户问题，收集基本信息，引导预约，第二天您直接跟进。</p></div>
+      <div class="biz-card"><div class="biz-icon">🎯</div><h3>专属定制</h3><p>根据您的服务项目、价格区间和品牌风格定制，bot 说的每句话都代表您的门店。</p></div>
+      <div class="biz-card"><div class="biz-icon">⚡</div><h3>3天交付</h3><p>填写门店信息表，3个工作日内完成配置，发送测试链接确认后即可嵌入您的网站。</p></div>
+    </div>
+    <div class="biz-cta">
+      <a href="/onboard.html" class="biz-btn">申请免费试用 →</a>
+      <p class="biz-note">前3个月免费 · 无需技术背景 · 一行代码嵌入网站</p>
     </div>
   </section>
 
@@ -269,8 +334,8 @@
   <section class="section section-alt">
     <div class="section-header"><h2>现在就开始</h2><p>用户直接开聊，合作伙伴欢迎联系</p></div>
     <div class="cta-grid">
-      <div class="cta-card user"><div class="cta-label">华人车主</div><h3>免费试用 AutocareAI</h3><p>Telegram 直接开聊，不用注册，中文服务，完全免费。</p><a href="https://t.me/AutocareAI_bot" class="btn btn-gold">→ 打开 Telegram 开始聊</a></div>
-      <div class="cta-card partner"><div class="cta-label">保险经纪 / 车行</div><h3>合作洽谈</h3><p>触达 GTA 华人新移民用户群，探索推荐合作模式。</p><a href="https://wa.me/16476192775" class="btn btn-navy">→ WhatsApp 联系我们</a></div>
+      <div class="cta-card user"><div class="cta-label">华人车主</div><h3>免费咨询 AutocareAI</h3><p>直接在网页开聊，不用注册，中文服务，完全免费。</p><button onclick="openChat()" class="btn btn-gold">→ 立即开始咨询</button></div>
+      <div class="cta-card partner"><div class="cta-label">汽修门店</div><h3>申请门店入驻</h3><p>为您的客户提供 AI 客服，提升接待效率和转化率。</p><a href="/onboard.html" class="btn btn-navy">→ 填写入驻申请</a></div>
     </div>
   </section>
 
@@ -288,28 +353,176 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-brand">AutocareAI · Smart for Cars, Heart for You</div>
-    <div class="footer-links"><a href="/privacy.html">Privacy Policy</a><a href="https://wa.me/16476192775">联系我们</a></div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/onboard.html">商家合作</a>
+      <a href="https://wa.me/16476192775">联系我们</a>
+    </div>
     <div class="footer-copy">© 2025 AutocareAI · Toronto, Canada</div>
   </footer>
 
   <!-- CHAT FAB -->
-  <a id="chat-fab" href="https://www.coze.com/store/agent/7645330677004763189?bot_id=true" target="_blank" rel="noopener" aria-label="立即咨询">💬</a>
+  <button id="chat-fab" onclick="toggleChat()" aria-label="立即咨询">💬</button>
 
-  <!-- IN-APP BROWSER DETECTION -->
+  <!-- CHAT WINDOW -->
+  <div id="chat-window">
+    <div class="cw-header">
+      <div class="cw-avatar">A</div>
+      <div class="cw-info">
+        <div class="cw-name">AutocareAI 助手</div>
+        <div class="cw-status"><span class="cw-dot"></span>在线 · 中英文均可</div>
+      </div>
+    </div>
+    <div class="cw-messages" id="cw-messages"></div>
+    <div class="cw-input-area">
+      <input class="cw-input" id="cw-input" placeholder="问问老哥……" onkeydown="cwHandleKey(event)">
+      <button class="cw-send" id="cw-send" onclick="cwSend()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="cw-powered">Powered by AutocareAI</div>
+  </div>
+
   <script>
+    const SYSTEM = `你是 AutocareAI，多伦多华人车主的"私人车辆管家"。你在多伦多修车圈、保险圈、停车圈摸爬滚打了 20 年，看透了各种套路，对新移民和新手极其耐心，爱讲大白话。
+
+你有四大核心能力：
+- 🚗 买车计算器：买车前算清楚真实月成本，避免买完才后悔
+- 🔧 维修防坑：解析报价单、挤水分、给砍价话术
+- 🛡️ 保险导航：帮新移民选对险种、判断报价、搞懂换险流程
+- 🅿️ 停车助手：看不懂标志、收到罚单、发位置找停车位
+
+核心人设原则：
+- 始终保持"懂行的华人邻家大哥"口吻，不退化为普通 AI 语气
+- 默认用户是完全不懂车、不懂保险、不懂停车规则的"纯小白"
+- 多伦多本地化：维修提 Canadian Tire、PartsSource；保险提 RATESDOTCA、Intact、Belairdirect；停车提 PayByPhone、SpotHero
+- 情绪安抚优先：看到高额报价或罚单容易慌，第一句话先稳住情绪
+- 用户用中文就中文回，用英文就英文回`;
+
+    const history = [];
+    let typing = false;
+    let inited = false;
+
+    function openChat() {
+      const win = document.getElementById('chat-window');
+      win.classList.add('open');
+      document.getElementById('chat-fab').textContent = '✕';
+      if (!inited) { inited = true; cwInit(); }
+      setTimeout(() => document.getElementById('cw-input').focus(), 300);
+    }
+
+    function toggleChat() {
+      const win = document.getElementById('chat-window');
+      const fab = document.getElementById('chat-fab');
+      const isOpen = win.classList.toggle('open');
+      fab.textContent = isOpen ? '✕' : '💬';
+      if (isOpen && !inited) { inited = true; cwInit(); }
+      if (isOpen) setTimeout(() => document.getElementById('cw-input').focus(), 300);
+    }
+
+    function cwInit() {
+      cwAddBot('🚗 朋友你好！老哥是多伦多华人车主的防坑管家，专治四大痛点：维修防坑、保险导航、买车计算、停车助手。你现在遇到哪块问题？', [
+        '修车报价单帮我看看',
+        '保险怎么选比较合适？',
+        '买什么车合适？帮我算成本',
+        '停车罚单怎么申诉？'
+      ]);
+    }
+
+    function cwAddBot(text, qrs) {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-bot';
+      d.innerHTML = `<div class="cw-bubble">${text.replace(/\n/g,'<br>')}</div><div class="cw-time">AutocareAI · 刚刚</div>`;
+      msgs.appendChild(d);
+      if (qrs && qrs.length) {
+        const qd = document.createElement('div');
+        qd.className = 'cw-msg cw-bot';
+        const qc = document.createElement('div');
+        qc.className = 'cw-quick';
+        qrs.forEach(q => {
+          const b = document.createElement('button');
+          b.className = 'cw-qr';
+          b.textContent = q;
+          b.onclick = () => { qc.parentElement.remove(); qd.remove(); cwHandleMsg(q); };
+          qc.appendChild(b);
+        });
+        qd.appendChild(qc);
+        msgs.appendChild(qd);
+      }
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwAddUser(text) {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-user';
+      d.innerHTML = `<div class="cw-bubble">${text}</div><div class="cw-time">你 · 刚刚</div>`;
+      msgs.appendChild(d);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwShowTyping() {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-bot cw-typing';
+      d.id = 'cw-typing';
+      d.innerHTML = `<div class="cw-dots"><span></span><span></span><span></span></div>`;
+      msgs.appendChild(d);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwHideTyping() {
+      const t = document.getElementById('cw-typing');
+      if (t) t.remove();
+    }
+
+    async function cwHandleMsg(text) {
+      if (typing) return;
+      typing = true;
+      document.getElementById('cw-send').disabled = true;
+      cwAddUser(text);
+      history.push({ role: 'user', content: text });
+      cwShowTyping();
+      try {
+        const res = await fetch('https://autocareai-api.dalinma49.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ system: SYSTEM, messages: history })
+        });
+        const data = await res.json();
+        cwHideTyping();
+        const reply = data.content?.[0]?.text || '不好意思，暂时连接有问题，稍后再试！';
+        history.push({ role: 'assistant', content: reply });
+        cwAddBot(reply);
+      } catch {
+        cwHideTyping();
+        cwAddBot('不好意思，网络暂时有点问题，稍后再试试！');
+      }
+      typing = false;
+      document.getElementById('cw-send').disabled = false;
+      document.getElementById('cw-input').focus();
+    }
+
+    async function cwSend() {
+      const input = document.getElementById('cw-input');
+      const text = input.value.trim();
+      if (!text || typing) return;
+      input.value = '';
+      await cwHandleMsg(text);
+    }
+
+    function cwHandleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cwSend(); }
+    }
+
+    // In-app browser detection
     (function() {
       var ua = navigator.userAgent || '';
-      var isInApp = /MicroMessenger/i.test(ua) ||
-        /Xiaohongshu/i.test(ua) ||
-        /xhsSpeedApp/i.test(ua) ||
-        /Weibo/i.test(ua) ||
-        /musical_ly/i.test(ua) ||
-        /BytedanceWebview/i.test(ua) ||
-        /FBAN|FBAV/i.test(ua) ||
-        /Instagram/i.test(ua);
-      if (isInApp) {
-        document.getElementById('inapp-banner').classList.add('visible');
-      }
+      var isInApp = /MicroMessenger/i.test(ua) || /Xiaohongshu/i.test(ua) ||
+        /xhsSpeedApp/i.test(ua) || /Weibo/i.test(ua) || /musical_ly/i.test(ua) ||
+        /BytedanceWebview/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Instagram/i.test(ua);
+      if (isInApp) document.getElementById('inapp-banner').classList.add('visible');
     })();
   </script>
 
