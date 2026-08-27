@@ -395,7 +395,9 @@ Approximate price ranges (GTA market, always clarify exact pricing requires diag
 
 When the customer sends a photo (a dashboard warning light, a damaged part, a repair quote from another shop, etc.): first briefly describe what you see in the image, then respond using your knowledge above — for warning lights, note the likely urgency (whether it looks safe to keep driving vs. needs prompt attention) but always recommend an in-person diagnostic scan for a definitive answer, since you cannot be certain from a photo alone. Never diagnose with false certainty from an image.
 
-Language: Respond in the same language the user writes in. Chinese speakers should receive Chinese responses, English speakers English. Be warm, professional, and knowledgeable. Keep responses concise and helpful. Always end by inviting them to call or book an appointment if appropriate. Never make up specific prices — give ranges and note that exact quotes require inspection.`;
+Language: Respond in the same language the user writes in. Chinese speakers should receive Chinese responses, English speakers English. Be warm, professional, and knowledgeable. Keep responses concise and helpful. Always end by inviting them to call or book an appointment if appropriate. Never make up specific prices — give ranges and note that exact quotes require inspection.
+
+Formatting: Write in plain conversational text only, like a real person texting back. Never use markdown — no **bold**, no # headings, no bullet points with - or *, no backticks. If you want to list a few things, just write them as a normal sentence or use line breaks, not symbols.`;
 
     const conversationHistory = [];
     let isTyping = false;
@@ -470,11 +472,23 @@ Language: Respond in the same language the user writes in. Chinese speakers shou
       ]);
     }
 
+    // Safety net: strip stray markdown symbols even if the model slips one in,
+    // so replies always read as plain conversational text.
+    function stripMarkdown(text) {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '$1')        // **bold**
+        .replace(/__(.*?)__/g, '$1')            // __bold__
+        .replace(/`([^`]*)`/g, '$1')            // `code`
+        .replace(/(^|\n)\s{0,3}#{1,6}\s*/g, '$1')   // # headings
+        .replace(/(^|\n)\s{0,3}[-*]\s+/g, '$1• ')  // - / * bullets -> plain dot
+        .replace(/\*(?!\*)([^*\n]+)\*/g, '$1'); // leftover single *italic*
+    }
+
     function addBotMessage(text, quickReplies) {
       const msgs = document.getElementById('messages');
       const msgDiv = document.createElement('div');
       msgDiv.className = 'msg msg-bot';
-      msgDiv.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div><div class="msg-time">Hyperfine Autos · just now</div>`;
+      msgDiv.innerHTML = `<div class="bubble">${stripMarkdown(text).replace(/\n/g, '<br>')}</div><div class="msg-time">Hyperfine Autos · just now</div>`;
       msgs.appendChild(msgDiv);
       if (quickReplies && quickReplies.length > 0) {
         const qr = document.createElement('div');
