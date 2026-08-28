@@ -402,6 +402,8 @@ Formatting: Write in plain conversational text only, like a real person texting 
     const conversationHistory = [];
     let isTyping = false;
     let pendingImage = null; // { dataUrl, base64, mediaType }
+    const SHOP_ID = 'hyperfine';
+    const SESSION_ID = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
 
     // Resize/compress before upload — phone photos are often 3–8MB
     function resizeImage(file, maxDim = 1600, quality = 0.82) {
@@ -576,7 +578,9 @@ Formatting: Write in plain conversational text only, like a real person texting 
             model: 'claude-sonnet-4-6',
             max_tokens: 1000,
             system: SYSTEM_PROMPT,
-            messages: conversationHistory
+            messages: conversationHistory,
+            session_id: SESSION_ID,
+            shop: SHOP_ID
           })
         });
         const data = await response.json();
