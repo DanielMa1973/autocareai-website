@@ -464,14 +464,36 @@ Formatting: Write in plain conversational text only, like a real person texting 
       }
     }
 
+    // Quick-reply suggestions rotate with the Toronto driving season, plus a couple of
+    // "always relevant" habit questions (dealer price comparison stays year-round — it's
+    // the core trust hook). Update the four SEASON_QUESTIONS blocks below as the shop's
+    // seasonal promotions or focus areas change.
+    function getSeasonalQuickReplies() {
+      const month = new Date().getMonth() + 1; // 1–12
+      let seasonal, habit;
+      if (month === 12 || month === 1 || month === 2) {
+        // Winter: cold-start / battery trouble, winter-driving readiness
+        seasonal = ["天冷了打不着火，是电瓶问题吗？", "Is my car ready for winter driving?"];
+        habit = ["How does your pricing compare to the dealer?", "I need my BMW brakes checked"];
+      } else if (month >= 3 && month <= 5) {
+        // Spring: swap back to summer tires, check for road-salt rust after winter
+        seasonal = ["该换回夏胎了吗？", "Can you check for road-salt rust damage?"];
+        habit = ["How does your pricing compare to the dealer?", "Do you do pre-purchase inspections?"];
+      } else if (month >= 6 && month <= 8) {
+        // Summer: AC service, road-trip check-ups
+        seasonal = ["空调不制冷，大概是什么问题？", "Getting ready for a road trip — can you do a check-up?"];
+        habit = ["How does your pricing compare to the dealer?", "我的奔驰需要保养，大概多少钱？"];
+      } else {
+        // Fall (9–11): winter tire swap booking, pre-winter rustproofing
+        seasonal = ["什么时候该换雪胎了？", "Do you do rustproofing before winter?"];
+        habit = ["How does your pricing compare to the dealer?", "I need my BMW brakes checked"];
+      }
+      return [seasonal[0], seasonal[1], habit[0], habit[1]];
+    }
+
     function initChat() {
       const greeting = `Hi! I'm the AI assistant for Hyperfine Autos. We specialize in Audi, BMW, and Mercedes-Benz — with technicians who came from the original dealerships.\n\nHow can I help you today?`;
-      addBotMessage(greeting, [
-        "How does your pricing compare to the dealer?",
-        "I need my BMW brakes checked",
-        "我的奔驰需要保养，大概多少钱？",
-        "Do you do pre-purchase inspections?"
-      ]);
+      addBotMessage(greeting, getSeasonalQuickReplies());
     }
 
     // Safety net: strip stray markdown symbols even if the model slips one in,
