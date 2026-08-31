@@ -3,385 +3,612 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AutocareAI — 汽车行业超级 SA 诞生</title>
-  <meta name="description" content="专业、多语种、24小时在线——为 GTA 汽修厂提供按需定制的 AI Service Advisor。在预约之前，先建立信任。3 个工作日完成配置，一行代码嵌入网站。">
+  <title>AutocareAI — 多伦多华人车主贴身管家</title>
+  <meta name="description" content="买车、修车、保险、停车——多伦多华人新移民的AI驾车助手。免费使用，中文服务，直接开聊。">
+  <meta property="og:title" content="AutocareAI — Smart for Cars, Heart for You">
+  <meta property="og:description" content="GTA 华人新移民专属 AI 驾车助手，帮你避开买车、修车、保险、停车的每一个坑。">
+  <meta property="og:url" content="https://autocareai.ca">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #0F1E3C; --navy2: #162847; --navy3: #1e3560;
-      --gold: #C9A96E; --gold2: #e8c98a;
-      --white: #ffffff; --off: #FAFAF8;
-      --muted: #6B7280; --border: rgba(0,0,0,0.07); --text: #111827;
+      --navy: #0F1E3C;
+      --navy-mid: #1a2d52;
+      --navy-light: #243b6b;
+      --gold: #F5A623;
+      --gold-hover: #f7b540;
+      --white: #ffffff;
+      --bg-soft: #f8f9fb;
+      --text-muted: #6b7280;
+      --border: rgba(0,0,0,0.08);
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--text); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { text-decoration: none; color: inherit; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #1a1a1a; background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; }
+
+    /* IN-APP BANNER */
+    #inapp-banner { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 9999; background: #1a1a1a; color: #fff; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.35); }
+    #inapp-banner.visible { display: block; }
+    .inapp-inner { max-width: 480px; margin: 0 auto; display: flex; align-items: flex-start; gap: 12px; }
+    .inapp-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .inapp-text { flex: 1; }
+    .inapp-text strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #F5A623; }
+    .inapp-text p { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+    .inapp-text p span { background: rgba(245,166,35,0.2); color: #F5A623; border-radius: 3px; padding: 1px 5px; font-weight: 600; white-space: nowrap; }
+    .inapp-close { background: none; border: none; color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; padding: 0 0 0 8px; flex-shrink: 0; line-height: 1; }
+    .inapp-close:hover { color: rgba(255,255,255,0.8); }
 
     /* NAV */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); padding: 0 2.5rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; }
-    .nav-icon { width: 32px; height: 32px; background: var(--navy); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
-    .nav-icon svg { width: 17px; height: 17px; }
+    nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 0.5px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-logo-icon { width: 34px; height: 34px; background: var(--navy); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-icon svg { width: 18px; height: 18px; }
+    .nav-brand-wrap { line-height: 1.2; }
     .nav-brand { font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; display: block; }
-    .nav-sub { font-size: 11px; color: var(--muted); display: block; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 13px; color: var(--muted); transition: color 0.15s; }
+    .nav-tagline { font-size: 11px; color: var(--text-muted); }
+    .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+    .nav-links a { font-size: 13px; color: var(--text-muted); transition: color 0.15s; }
     .nav-links a:hover { color: var(--navy); }
-    .nav-cta { background: var(--gold); color: var(--navy); border-radius: 7px; padding: 8px 20px; font-size: 13px; font-weight: 700; transition: background 0.15s; }
-    .nav-cta:hover { background: var(--gold2); }
+    .nav-links a.highlight { color: var(--navy); font-weight: 600; }
+    .nav-cta { background: var(--gold); color: var(--navy); border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; transition: background 0.15s; flex-shrink: 0; }
+    .nav-cta:hover { background: var(--gold-hover); }
 
     /* HERO */
-    .hero-wrap { background: var(--navy); }
-    .hero { max-width: 1100px; margin: 0 auto; padding: 6rem 2.5rem 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,169,110,0.12); border: 1px solid rgba(201,169,110,0.25); color: var(--gold); border-radius: 20px; font-size: 11px; font-weight: 500; padding: 4px 12px; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
-    .hero h1 { font-size: clamp(32px, 4vw, 48px); font-weight: 800; color: var(--white); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1rem; }
-    .hero h1 em { font-style: normal; color: var(--gold); }
-    .hero-sub { font-size: 16px; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 2rem; max-width: 420px; }
-    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); border-radius: 8px; padding: 13px 24px; font-size: 14px; font-weight: 700; transition: background 0.15s, transform 0.1s; border: none; cursor: pointer; font-family: inherit; }
-    .btn-primary:hover { background: var(--gold2); transform: translateY(-1px); }
-    .btn-ghost { display: inline-flex; align-items: center; background: transparent; color: rgba(255,255,255,0.7); border: 0.5px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 13px 24px; font-size: 14px; font-weight: 500; transition: border-color 0.15s, color 0.15s; cursor: pointer; font-family: inherit; }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
-    .hero-note { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 1rem; }
-
-    /* HERO DEMO */
-    .hero-demo { background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; }
-    .demo-bar { background: rgba(255,255,255,0.06); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 8px; border-bottom: 0.5px solid rgba(255,255,255,0.07); }
-    .demo-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .demo-dot.r { background: #ff5f57; } .demo-dot.y { background: #febc2e; } .demo-dot.g { background: #28c840; }
-    .demo-bar-title { margin-left: 4px; font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 500; }
-    .demo-badge { margin-left: auto; background: rgba(40,200,64,0.15); color: #4ade80; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; display: flex; align-items: center; gap: 4px; }
-    .demo-badge::before { content: ''; width: 5px; height: 5px; background: #4ade80; border-radius: 50%; }
-    .demo-body { padding: 1rem; display: flex; flex-direction: column; gap: 10px; }
-    .dm { max-width: 88%; }
-    .dm-a { align-self: flex-start; } .dm-u { align-self: flex-end; }
-    .dm-bubble { border-radius: 12px; padding: 0.6rem 0.85rem; font-size: 12.5px; line-height: 1.6; }
-    .dm-a .dm-bubble { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border-bottom-left-radius: 3px; }
-    .dm-u .dm-bubble { background: var(--gold); color: var(--navy); font-weight: 500; border-bottom-right-radius: 3px; }
-    .dm-t { font-size: 9.5px; color: rgba(255,255,255,0.22); margin-top: 3px; padding: 0 3px; }
-    .dm-u .dm-t { text-align: right; }
-    .demo-input-row { display: flex; gap: 6px; align-items: center; padding: 0.75rem 1rem; border-top: 0.5px solid rgba(255,255,255,0.07); }
-    .demo-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 7px; padding: 8px 10px; font-size: 12px; color: rgba(255,255,255,0.3); font-family: inherit; }
-    .demo-send { width: 30px; height: 30px; background: var(--gold); border-radius: 7px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; flex-shrink: 0; }
-    .demo-send svg { width: 13px; height: 13px; color: var(--navy); }
-    .demo-powered { text-align: center; font-size: 9px; color: rgba(255,255,255,0.15); padding: 4px 0 8px; }
-
-    /* PROOF STRIP */
-    .proof-strip { background: var(--off); border-bottom: 0.5px solid var(--border); padding: 1.25rem 2.5rem; display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; justify-content: center; }
-    .proof-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-    .proof-dot { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+    .hero { background: var(--navy); padding: 5rem 2rem 4rem; text-align: center; }
+    .hero-badge { display: inline-block; background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; font-size: 12px; font-weight: 500; padding: 4px 14px; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1.25rem; letter-spacing: -0.8px; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.75; max-width: 500px; margin: 0 auto 2.5rem; }
+    .hero-quote { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.25rem 1.5rem; max-width: 460px; margin: 0 auto 2.5rem; text-align: left; }
+    .hero-quote p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.7; font-style: italic; margin-bottom: 0.75rem; }
+    .hero-quote-meta { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 6px; }
+    .quote-tag { background: rgba(245,166,35,0.2); color: var(--gold); font-size: 10px; font-style: normal; padding: 2px 7px; border-radius: 4px; font-weight: 500; }
+    .hero-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 28px; font-size: 15px; font-weight: 700; transition: background 0.15s, transform 0.1s; border: none; cursor: pointer; font-family: inherit; }
+    .hero-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .hero-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .hero-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.85rem; }
 
     /* SECTIONS */
-    .section { padding: 5rem 2.5rem; }
-    .section-inner { max-width: 1000px; margin: 0 auto; }
-    .section-alt { background: var(--off); }
-    .section-dark { background: var(--navy); }
-    .eyebrow { font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem; }
-    .eyebrow-light { color: rgba(201,169,110,0.6); }
-    .section-title { font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; color: var(--navy); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 0.75rem; }
-    .section-title-w { color: var(--white); }
-    .section-body { font-size: 16px; color: var(--muted); line-height: 1.75; max-width: 580px; margin-bottom: 2.5rem; }
-    .section-body-w { color: rgba(255,255,255,0.5); }
+    .section { padding: 4rem 2rem; }
+    .section-alt { background: var(--bg-soft); }
+    .section-header { text-align: center; margin-bottom: 2.5rem; }
+    .section-header h2 { font-size: clamp(20px, 3vw, 26px); font-weight: 700; color: var(--navy); letter-spacing: -0.5px; margin-bottom: 0.4rem; }
+    .section-header p { font-size: 14px; color: var(--text-muted); }
 
-    /* PROBLEM */
-    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--border); gap: 0.5px; border: 0.5px solid var(--border); border-radius: 14px; overflow: hidden; }
-    .problem-card { background: var(--white); padding: 2rem; }
-    .problem-num { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 2px; margin-bottom: 1rem; }
-    .problem-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; line-height: 1.3; }
-    .problem-body { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    /* PAIN CARDS */
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto; }
+    .pain-card { background: var(--white); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.4rem; }
+    .pain-icon { font-size: 26px; margin-bottom: 0.85rem; }
+    .pain-card h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
+    .pain-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
-    /* SOLUTION */
-    .layer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-    .layer-card { border-radius: 14px; padding: 2rem; border: 0.5px solid var(--border); }
-    .layer-dark { background: var(--navy); border-color: transparent; }
-    .layer-light { background: var(--off); }
-    .layer-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.75rem; }
-    .ll-gold { color: rgba(201,169,110,0.65); } .ll-navy { color: var(--gold); }
-    .layer-title { font-size: 18px; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.25; }
-    .lt-white { color: var(--white); } .lt-navy { color: var(--navy); }
-    .layer-body { font-size: 13.5px; line-height: 1.7; }
-    .lb-white { color: rgba(255,255,255,0.55); } .lb-muted { color: var(--muted); }
-    .layer-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
-    .lt-tag { font-size: 12px; padding: 4px 10px; border-radius: 6px; }
-    .ltt-light { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
-    .ltt-dark { background: rgba(15,30,60,0.07); color: var(--navy); }
+    /* MODULE CARDS */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto; }
+    .module-card { border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem; background: var(--white); transition: box-shadow 0.15s; }
+    .module-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+    .module-card.featured { border-color: var(--gold); border-width: 1.5px; }
+    .module-emoji { font-size: 26px; margin-bottom: 0.85rem; }
+    .module-card h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+    .module-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+    .module-example { margin-top: 1rem; background: var(--bg-soft); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 0.65rem 0.9rem; font-size: 12px; color: var(--navy); line-height: 1.55; font-style: italic; }
 
-    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-    .feature-card { background: var(--white); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: box-shadow 0.15s; }
-    .feature-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-    .feature-icon { font-size: 24px; margin-bottom: 0.75rem; }
-    .feature-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
-    .feature-body { font-size: 13px; color: var(--muted); line-height: 1.65; }
-    .feature-result { margin-top: 0.75rem; font-size: 12px; font-weight: 600; color: var(--gold); }
+    /* DEMO CHAT */
+    .demo { background: var(--navy); padding: 4rem 2rem; }
+    .demo .section-header h2 { color: var(--white); }
+    .demo .section-header p { color: rgba(255,255,255,0.5); }
+    .chat-window { background: var(--navy-mid); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 16px; max-width: 480px; margin: 0 auto; overflow: hidden; }
+    .chat-header { background: var(--navy-light); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 10px; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
+    .chat-avatar { width: 34px; height: 34px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--navy); flex-shrink: 0; }
+    .chat-header-info .name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .chat-header-info .status { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 5px; }
+    .status-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+    .chat-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 14px; }
+    .msg { max-width: 88%; }
+    .msg-bot { align-self: flex-start; }
+    .msg-user { align-self: flex-end; }
+    .bubble { border-radius: 14px; padding: 0.7rem 1rem; font-size: 13px; line-height: 1.6; }
+    .msg-bot .bubble { background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.88); border-bottom-left-radius: 3px; }
+    .msg-user .bubble { background: var(--gold); color: var(--navy); font-weight: 500; border-bottom-right-radius: 3px; }
+    .msg-time { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 4px; padding: 0 4px; }
+    .msg-user .msg-time { text-align: right; }
+    .highlight { color: var(--gold); font-weight: 600; }
 
-    /* STEPS */
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
-    .step-card { padding: 1.5rem 1.25rem; }
-    .step-num { font-size: 28px; font-weight: 800; color: var(--gold); opacity: 0.45; line-height: 1; margin-bottom: 0.75rem; }
-    .step-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
-    .step-body { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.65; }
+    /* B-END SECTION */
+    .biz-section { background: var(--navy); padding: 4rem 2rem; }
+    .biz-section .section-header h2 { color: var(--white); }
+    .biz-section .section-header p { color: rgba(255,255,255,0.5); }
+    .biz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto 2.5rem; }
+    .biz-card { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 14px; padding: 1.5rem; }
+    .biz-icon { font-size: 26px; margin-bottom: 0.75rem; }
+    .biz-card h3 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+    .biz-card p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+    .biz-cta { text-align: center; }
+    .biz-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); border-radius: 10px; padding: 14px 32px; font-size: 15px; font-weight: 700; transition: background 0.15s, transform 0.1s; }
+    .biz-btn:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .biz-note { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 0.75rem; }
 
     /* CTA */
-    .cta-card { background: var(--navy); border-radius: 20px; padding: 4rem 3rem; text-align: center; position: relative; overflow: hidden; }
-    .cta-card::before { content: ''; position: absolute; top: -50%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 70%); pointer-events: none; }
-    .cta-title { font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; color: var(--white); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 0.75rem; position: relative; }
-    .cta-sub { font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 2rem; position: relative; }
-    .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
-    .cta-note { font-size: 12px; color: rgba(255,255,255,0.22); margin-top: 1rem; position: relative; }
+    .cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; max-width: 620px; margin: 0 auto; }
+    .cta-card { border-radius: 16px; padding: 2rem 1.5rem; text-align: center; }
+    .cta-card.user { background: var(--navy); }
+    .cta-card.partner { background: var(--white); border: 1.5px solid var(--navy); }
+    .cta-label { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 0.6rem; }
+    .cta-card.user .cta-label { color: rgba(255,255,255,0.45); }
+    .cta-card.partner .cta-label { color: var(--text-muted); }
+    .cta-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 0.6rem; }
+    .cta-card.user h3 { color: var(--white); }
+    .cta-card.partner h3 { color: var(--navy); }
+    .cta-card p { font-size: 13px; line-height: 1.65; margin-bottom: 1.5rem; }
+    .cta-card.user p { color: rgba(255,255,255,0.55); }
+    .cta-card.partner p { color: var(--text-muted); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border-radius: 10px; padding: 12px 22px; font-size: 14px; font-weight: 600; width: 100%; transition: background 0.15s, transform 0.1s; cursor: pointer; border: none; font-family: inherit; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-hover); }
+    .btn-navy { background: var(--navy); color: var(--white); }
+    .btn-navy:hover { background: #1a3060; }
+
+    /* TRUST */
+    .trust { padding: 2rem; background: var(--white); border-top: 0.5px solid var(--border); }
+    .trust-items { display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; justify-content: center; }
+    .trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-muted); }
+    .trust-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
 
     /* FOOTER */
-    footer { background: var(--navy); border-top: 0.5px solid rgba(255,255,255,0.06); padding: 2rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .footer-brand { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); }
+    footer { background: var(--navy); padding: 1.5rem 2rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+    .footer-brand { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); transition: color 0.15s; }
-    .footer-links a:hover { color: rgba(255,255,255,0.6); }
-    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-links a { font-size: 12px; color: rgba(255,255,255,0.38); transition: color 0.15s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.7); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* CHAT FAB */
+    #chat-fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; box-shadow: 0 4px 20px rgba(245,166,35,0.4); border: none; font-size: 24px; transition: transform 0.2s, box-shadow 0.2s; }
+    #chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(245,166,35,0.5); }
+
+    /* CHAT WINDOW */
+    #chat-window { position: fixed; bottom: 92px; right: 24px; width: 360px; height: 520px; background: var(--navy-mid); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 16px; display: none; flex-direction: column; z-index: 99; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
+    #chat-window.open { display: flex; }
+    .cw-header { background: var(--navy-light); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 10px; border-bottom: 0.5px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+    .cw-avatar { width: 34px; height: 34px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--navy); flex-shrink: 0; }
+    .cw-info .cw-name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .cw-info .cw-status { font-size: 11px; color: rgba(255,255,255,0.4); display: flex; align-items: center; gap: 5px; }
+    .cw-dot { width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+    .cw-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 12px; }
+    .cw-messages::-webkit-scrollbar { width: 3px; }
+    .cw-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+    .cw-msg { max-width: 88%; }
+    .cw-bot { align-self: flex-start; }
+    .cw-user { align-self: flex-end; }
+    .cw-bubble { border-radius: 14px; padding: 0.65rem 0.9rem; font-size: 13px; line-height: 1.6; }
+    .cw-bot .cw-bubble { background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.88); border-bottom-left-radius: 3px; }
+    .cw-user .cw-bubble { background: var(--gold); color: var(--navy); font-weight: 500; border-bottom-right-radius: 3px; }
+    .cw-time { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; padding: 0 4px; }
+    .cw-user .cw-time { text-align: right; }
+    .cw-typing { align-self: flex-start; }
+    .cw-dots { display: flex; gap: 4px; padding: 0.65rem 0.9rem; background: rgba(255,255,255,0.09); border-radius: 14px; border-bottom-left-radius: 3px; }
+    .cw-dots span { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: bounce 1.2s infinite; }
+    .cw-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .cw-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .cw-quick { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+    .cw-qr { background: rgba(245,166,35,0.12); border: 0.5px solid rgba(245,166,35,0.3); color: var(--gold); font-size: 12px; padding: 7px 12px; border-radius: 8px; cursor: pointer; text-align: left; font-family: inherit; transition: background 0.15s; }
+    .cw-qr:hover { background: rgba(245,166,35,0.22); }
+    .cw-input-area { padding: 0.75rem 1rem; border-top: 0.5px solid rgba(255,255,255,0.08); display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .cw-input { flex: 1; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: var(--white); font-family: inherit; outline: none; }
+    .cw-input::placeholder { color: rgba(255,255,255,0.25); }
+    .cw-input:focus { border-color: rgba(245,166,35,0.4); }
+    .cw-send { width: 34px; height: 34px; background: var(--gold); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s; }
+    .cw-send:hover { background: var(--gold-hover); }
+    .cw-send:disabled { opacity: 0.4; cursor: not-allowed; }
+    .cw-send svg { width: 15px; height: 15px; color: var(--navy); }
+
+    /* IMAGE UPLOAD */
+    .cw-attach { width: 34px; height: 34px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; color: rgba(255,255,255,0.45); transition: background 0.15s, color 0.15s, border-color 0.15s; }
+    .cw-attach:hover { background: rgba(255,255,255,0.1); color: var(--gold); border-color: rgba(245,166,35,0.3); }
+    .cw-attach svg { width: 16px; height: 16px; }
+    .cw-preview-row { padding: 0 1rem; margin-top: 8px; flex-shrink: 0; }
+    .cw-preview-chip { position: relative; display: inline-block; width: 52px; height: 52px; border-radius: 8px; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.15); }
+    .cw-preview-chip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cw-preview-remove { position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; background: rgba(0,0,0,0.65); color: #fff; border: none; border-radius: 50%; font-size: 11px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0; }
+    .cw-msg-img { max-width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 6px; display: block; cursor: pointer; }
+
+    .cw-powered { text-align: center; font-size: 10px; color: rgba(255,255,255,0.2); padding: 4px 0 8px; }
 
     /* RESPONSIVE */
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2.5rem; }
-      .problem-grid { grid-template-columns: 1fr; }
-      .layer-grid { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .feature-grid { grid-template-columns: 1fr; }
-      nav { padding: 0 1.5rem; }
+    @media (max-width: 600px) {
+      nav { padding: 0.85rem 1.25rem; }
       .nav-links { display: none; }
-      .section { padding: 3.5rem 1.5rem; }
-      .cta-card { padding: 3rem 1.5rem; }
-      footer { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
-    }
-    @media (max-width: 520px) {
-      .steps { grid-template-columns: 1fr; }
-      .feature-grid { grid-template-columns: 1fr; }
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .section { padding: 3rem 1.25rem; }
+      .demo { padding: 3rem 1.25rem; }
+      .biz-section { padding: 3rem 1.25rem; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+      .trust { padding: 1.5rem 1.25rem; }
+      #chat-window { width: calc(100vw - 32px); right: 16px; bottom: 88px; height: 65vh; }
     }
   </style>
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "4c1cfc27f7fd46669ed9ad5da884b05a"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </head>
 <body>
 
-<nav>
-  <a href="/" class="nav-logo">
-    <div class="nav-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
-        <circle cx="13" cy="17" r="3"/><circle cx="21" cy="17" r="3"/>
-        <path d="M13 17h2m4 0h2"/>
-      </svg>
-    </div>
-    <div>
-      <span class="nav-brand">AutocareAI</span>
-      <span class="nav-sub">Smart for Cars, Heart for You</span>
-    </div>
-  </a>
-  <div class="nav-links">
-    <a href="#problem">为什么需要</a>
-    <a href="#solution">产品方案</a>
-    <a href="#how">接入流程</a>
-    <a href="#contact">联系我们</a>
-  </div>
-  <a href="/onboard.html" class="nav-cta">申请免费试用 →</a>
-</nav>
-
-<div class="hero-wrap">
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-tag">汽车行业超级 SA 诞生</div>
-      <h1>24小时在线<br>多语种 <em>SA</em></h1>
-      <p class="hero-sub">在预约之前，先建立信任。为您的汽修厂定制专属 AI Service Advisor，全天候以客户的语言接待、解答、引导预约。</p>
-      <div class="hero-actions">
-        <a href="https://autocareai.ca/onboard.html" class="btn-primary">申请免费试用 →</a>
-        <a href="https://autocareai.ca/hyperfine_demo.html" class="btn-ghost" target="_blank">查看演示效果</a>
+  <!-- IN-APP BROWSER BANNER -->
+  <div id="inapp-banner" role="alert">
+    <div class="inapp-inner">
+      <div class="inapp-icon">⚠️</div>
+      <div class="inapp-text">
+        <strong>建议用系统浏览器打开，体验更流畅</strong>
+        <p>点右上角 <span>⋯ 更多</span> → 选择 <span>在浏览器中打开</span></p>
       </div>
-      <p class="hero-note">先试后买，安心保证 · 无需技术背景</p>
-    </div>
-    <div class="hero-demo">
-      <div class="demo-bar">
-        <div class="demo-dot r"></div><div class="demo-dot y"></div><div class="demo-dot g"></div>
-        <span class="demo-bar-title">您门店的 AI Service Advisor</span>
-        <span class="demo-badge">在线</span>
-      </div>
-      <div class="demo-body">
-        <div class="dm dm-a">
-          <div class="dm-bubble">您好！我是这里的 AI 助手。我们专注 BMW、奔驰、奥迪的维修保养，技师均来自原厂经销商。请问您的爱车有什么需要？</div>
-          <div class="dm-t">AI Service Advisor · 刚刚</div>
-        </div>
-        <div class="dm dm-u">
-          <div class="dm-bubble">我的宝马发动机警告灯亮了，严重吗？</div>
-          <div class="dm-t">客户 · 凌晨 11:42</div>
-        </div>
-        <div class="dm dm-a">
-          <div class="dm-bubble">发动机警告灯的原因很多，从轻微到需要立即处理都有可能。关键是用专业设备读取故障码，才能准确判断。<br><br>我们的技师来自 BMW 原厂，有完整的诊断设备。建议您尽快预约检查——通常当天就能知道原因。您方便什么时候来？</div>
-          <div class="dm-t">AI Service Advisor · 凌晨 11:42</div>
-        </div>
-        <div class="dm dm-u">
-          <div class="dm-bubble">明天上午可以吗？</div>
-          <div class="dm-t">客户 · 凌晨 11:43</div>
-        </div>
-        <div class="dm dm-a">
-          <div class="dm-bubble">可以的！请告诉我您的车型和年份，我帮您记录。我们明早 9 点开门，届时团队会与您确认。</div>
-          <div class="dm-t">AI Service Advisor · 凌晨 11:43</div>
-        </div>
-      </div>
-      <div class="demo-input-row">
-        <div class="demo-input">发送消息…</div>
-        <button class="demo-send">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-          </svg>
-        </button>
-      </div>
-      <div class="demo-powered">Powered by AutocareAI</div>
+      <button class="inapp-close" onclick="document.getElementById('inapp-banner').classList.remove('visible')" aria-label="关闭">×</button>
     </div>
   </div>
-</div>
 
-<div class="proof-strip">
-  <div class="proof-item"><span class="proof-dot"></span>3 个工作日完成配置</div>
-  <div class="proof-item"><span class="proof-dot"></span>中文、英文自动切换</div>
-
-  <div class="proof-item"><span class="proof-dot"></span>先试后买，安心保证</div>
-</div>
-
-<div class="section" id="problem">
-  <div class="section-inner">
-    <div class="eyebrow">为什么需要</div>
-    <h2 class="section-title">您的门店正在每天流失商机</h2>
-    <p class="section-body">不是因为服务不好，而是因为客户在找到您之前，没有机会了解您有多好。</p>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-num">01</div>
-        <div class="problem-title">非营业时间<br>询单全部流失</div>
-        <div class="problem-body">客户在晚上、周末发来问题和预约请求，没有人回应，他们就去找别人了。雇人 24 小时值班不现实，但这些询单就是真实的收入。</div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v3"/>
+          <circle cx="13" cy="17" r="3"/><circle cx="21" cy="17" r="3"/>
+          <path d="M13 17h2m4 0h2"/>
+        </svg>
       </div>
-      <div class="problem-card">
-        <div class="problem-num">02</div>
-        <div class="problem-title">多语种客户<br>无法顺畅沟通</div>
-        <div class="problem-body">GTA 超过 150 万华人，还有数十万韩裔、南亚裔居民。语言障碍不只是沟通问题，更是信任问题——客户不确定自己有没有被理解，就不会预约。</div>
-      </div>
-      <div class="problem-card">
-        <div class="problem-num">03</div>
-        <div class="problem-title">客户进门前<br>不了解您的专业度</div>
-        <div class="problem-body">您的技师来自原厂，技术水平不逊于 4S 店——但客户在预约之前不知道这些。信任还没建立，客户就已经选择了别人。</div>
+      <div class="nav-brand-wrap">
+        <span class="nav-brand">AutocareAI</span>
+        <span class="nav-tagline">Smart for Cars, Heart for You</span>
       </div>
     </div>
-  </div>
-</div>
+    <div class="nav-links">
+      <a href="#features">功能介绍</a>
+      <a href="#biz" class="highlight">商家合作</a>
+    </div>
+    <a href="/onboard.html" class="nav-cta">门店入驻 →</a>
+  </nav>
 
-<div class="section section-alt" id="solution">
-  <div class="section-inner">
-    <div class="eyebrow">产品方案</div>
-    <h2 class="section-title">一位懂您门店的<br>AI Service Advisor</h2>
-    <p class="section-body">AutocareAI 不只是一个回答问题的机器人——它是一位了解您门店、懂汽车行业、能用客户语言沟通的专属顾问。</p>
-    <div class="layer-grid">
-      <div class="layer-card layer-dark">
-        <div class="layer-label ll-gold">第一层 · 门店个性化</div>
-        <div class="layer-title lt-white">专属于您的门店</div>
-        <div class="layer-body lb-white">AI 深度学习您的服务项目、技师背景、营业时间、预约流程和品牌风格。每一句回答都代表您的门店，而非泛化模板。</div>
-        <div class="layer-tags">
-          <span class="lt-tag ltt-light">服务项目</span>
-          <span class="lt-tag ltt-light">品牌风格</span>
-          <span class="lt-tag ltt-light">预约流程</span>
-          <span class="lt-tag ltt-light">门店特色</span>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">多伦多华人新移民专属</div>
+    <h1>买车、修车、保险、停车<br><span>信息差，老哥帮你填</span></h1>
+    <p class="hero-sub">无需下载 App，直接在网页开聊。20 年 GTA 老司机经验，帮你避开每一个坑。</p>
+    <div class="hero-quote">
+      <p>"修车报价单发过去，五分钟给我讲清楚这个价格是怎么算出来的，第一次真的看懂了维修单上写的是啥。"</p>
+      <div class="hero-quote-meta"><span class="quote-tag">用户反馈</span>Markham · 来加拿大 8 个月</div>
+    </div>
+    <button class="hero-btn" onclick="openChat()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      立即免费咨询
+    </button>
+    <p class="hero-note">完全免费 · 中文服务 · 无需注册</p>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section class="section section-alt" id="features">
+    <div class="section-header"><h2>新移民买车，到处是坑</h2><p>不是你不聪明，是信息差太大了</p></div>
+    <div class="grid-4">
+      <div class="pain-card"><div class="pain-icon">🔧</div><h3>修车被坑</h3><p>零件被换成贵的、工时费虚报，英文又看不懂，只能被动接受。</p></div>
+      <div class="pain-card"><div class="pain-icon">🛡️</div><h3>保险不知道怎么选</h3><p>险种看不懂、报价贵不贵心里没数、海外驾龄能折算没人告诉你。</p></div>
+      <div class="pain-card"><div class="pain-icon">🚗</div><h3>买车算不清楚</h3><p>只算了月供，没算保险、冬胎、底盘防锈……买完才发现负担不起。</p></div>
+      <div class="pain-card"><div class="pain-icon">🅿️</div><h3>停车罚单一张又一张</h3><p>标志看不懂、冬季禁令不知道、小区路边随便停——罚款悄悄积累。</p></div>
+    </div>
+  </section>
+
+  <!-- MODULES -->
+  <section class="section">
+    <div class="section-header"><h2>四大功能，一个 AI 全搞定</h2><p>不用懂行，把问题发给老哥就行</p></div>
+    <div class="grid-2">
+      <div class="module-card featured"><div class="module-emoji">🔧</div><h3>贴身维修管家 · 价格构成解读</h3><p>拍下维修报价单发过来，AI 结合技术经验逐项拆解价格构成——零件档次、工时合不合理、门店类型差异，帮你搞懂这钱花得值不值。</p><div class="module-example">"换刹车片报了 $680，老哥讲清楚了原厂件+电脑复位贵在哪，我心里有数了。"</div></div>
+      <div class="module-card"><div class="module-emoji">🛡️</div><h3>保险导航 · 选对买对</h3><p>新手第一次买险怎么选？报价单贵不贵？怎么省 $300–800/年？全程中文陪你搞懂。</p><div class="module-example">"告诉老哥有中国驾龄，帮我申请折算，保费直接少了 $600。"</div></div>
+      <div class="module-card"><div class="module-emoji">🚗</div><h3>买车计算器 · 算清再买</h3><p>输入车型，算出月供＋保险＋油费＋保养＋冬胎的真实月成本，避免买完才后悔。</p><div class="module-example">"二手宝马看起来便宜，老哥算完月成本比新 RAV4 贵 $350。"</div></div>
+      <div class="module-card"><div class="module-emoji">🅿️</div><h3>停车助手 · 罚单申诉</h3><p>拍标志看不懂？发位置帮你找停车位？收到罚单帮你判断能否申诉并给话术。</p><div class="module-example">"收到 $100 冬季禁令罚单，老哥给了申诉话术，最后成功取消。"</div></div>
+    </div>
+  </section>
+
+  <!-- DEMO CHAT -->
+  <section class="demo">
+    <div class="section-header"><h2>真实对话，你来感受一下</h2><p>这就是你开始用 AutocareAI 的第一分钟</p></div>
+    <div class="chat-window">
+      <div class="chat-header">
+        <div class="chat-avatar">A</div>
+        <div class="chat-header-info"><div class="name">AutocareAI</div><div class="status"><span class="status-dot"></span>在线 · 通常几秒内回复</div></div>
       </div>
-      <div class="layer-card layer-light">
-        <div class="layer-label ll-navy">第二层 · 行业知识库</div>
-        <div class="layer-title lt-navy">深厚的行业知识</div>
-        <div class="layer-body lb-muted">内置 GTA 汽车行业专业知识——故障症状解读、保养周期指南、德系车特性、买车前注意事项。帮客户真正理解他们的车，从而建立对您门店的信任。</div>
-        <div class="layer-tags">
-          <span class="lt-tag ltt-dark">故障诊断知识</span>
-          <span class="lt-tag ltt-dark">保养周期</span>
-          <span class="lt-tag ltt-dark">德系车专项</span>
-          <span class="lt-tag ltt-dark">买车建议</span>
-        </div>
+      <div class="chat-body">
+        <div class="msg msg-bot"><div class="bubble">🚗 朋友你好！老哥是多伦多华人车主的贴身用车管家，专治四大痛点：贴身维修管家、保险导航、买车计算、停车助手。你现在遇到哪块问题？</div><div class="msg-time">AutocareAI · 刚刚</div></div>
+        <div class="msg msg-user"><div class="bubble">车行说我要换刹车片，报价 $680，不知道贵不贵</div><div class="msg-time">你 · 刚刚</div></div>
+        <div class="msg msg-bot"><div class="bubble">🔧 朋友别慌，先告诉老哥是什么车？年份+品牌+型号，有 VIN 码更好。刹车片这个项目老哥门儿清，GTA 正常价差很多，不同车型不一样。</div><div class="msg-time">AutocareAI · 刚刚</div></div>
+        <div class="msg msg-user"><div class="bubble">2020 Honda CR-V，跑了 6 万公里</div><div class="msg-time">你 · 刚刚</div></div>
+        <div class="msg msg-bot"><div class="bubble">🛠️ 价格构成拆解：<br><br>GTA 参考区间：前刹车片（零件 $80）+ 工时（1h × $120）= <span class="highlight">$200–$280</span><br><br>你这份报价 $680，如果用了原厂件、还做了额外的刹车系统检测，价格会往上走，但这个数字已经明显超出常规范围了。建议直接问门店要一份项目明细，看看具体贵在哪一项 👇</div><div class="msg-time">AutocareAI · 刚刚</div></div>
       </div>
     </div>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🕐</div>
-        <div class="feature-title">24 小时全天候在线</div>
-        <div class="feature-body">凌晨的询价、周末的预约请求——AI SA 全天候响应，不让任何一个商机流失。</div>
-        <div class="feature-result">↑ 非营业时间询单全部接收</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🌐</div>
-        <div class="feature-title">多语种无缝切换</div>
-        <div class="feature-body">中文、英文自动识别，可扩展粤语等语言。每一位客户都能用自己最舒适的语言交流。</div>
-        <div class="feature-result">↑ 多族裔客户零流失</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🤝</div>
-        <div class="feature-title">在预约之前建立信任</div>
-        <div class="feature-body">通过专业的知识解答，帮客户了解为什么您的门店值得信赖——让他们进门之前就已经认可您。</div>
-        <div class="feature-result">↑ 预约转化率提升</div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📋</div>
-        <div class="feature-title">引导预约与信息收集</div>
-        <div class="feature-body">智能收集客户车型、问题描述和方便时间，整理好再通知您的团队跟进，省去来回沟通。</div>
-        <div class="feature-result">↑ 预约质量更高</div>
-      </div>
+  </section>
 
+  <!-- B-END SECTION -->
+  <section class="biz-section" id="biz">
+    <div class="section-header">
+      <h2>为您的门店配置 AI 服务顾问</h2>
+      <p>帮助华人车主更好地了解您的服务，引导预约，提升转化</p>
+    </div>
+    <div class="biz-grid">
+      <div class="biz-card"><div class="biz-icon">🌐</div><h3>中英双语接待</h3><p>自动识别用户语言，中文英文无缝切换，不让任何一个客户因语言问题流失。</p></div>
+      <div class="biz-card"><div class="biz-icon">📅</div><h3>24小时引导预约</h3><p>非营业时间也能回答客户问题，收集基本信息，引导预约，第二天您直接跟进。</p></div>
+      <div class="biz-card"><div class="biz-icon">🎯</div><h3>专属定制</h3><p>根据您的服务项目、价格区间和品牌风格定制，bot 说的每句话都代表您的门店。</p></div>
+      <div class="biz-card"><div class="biz-icon">⚡</div><h3>3天交付</h3><p>填写门店信息表，3个工作日内完成配置，发送测试链接确认后即可嵌入您的网站。</p></div>
+    </div>
+    <div class="biz-cta">
+      <a href="/onboard.html" class="biz-btn">申请免费试用 →</a>
+      <p class="biz-note">前3个月免费 · 无需技术背景 · 一行代码嵌入网站</p>
+    </div>
+  </section>
 
+  <!-- CTA -->
+  <section class="section section-alt">
+    <div class="section-header"><h2>现在就开始</h2><p>用户直接开聊，合作伙伴欢迎联系</p></div>
+    <div class="cta-grid">
+      <div class="cta-card user"><div class="cta-label">华人车主</div><h3>免费咨询 AutocareAI</h3><p>直接在网页开聊，不用注册，中文服务，完全免费。</p><button onclick="openChat()" class="btn btn-gold">→ 立即开始咨询</button></div>
+      <div class="cta-card partner"><div class="cta-label">汽修门店</div><h3>申请门店入驻</h3><p>为您的客户提供 AI 服务顾问，提升接待效率和转化率。</p><a href="/onboard.html" class="btn btn-navy">→ 填写入驻申请</a></div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="trust-items">
+      <div class="trust-item"><span class="trust-dot"></span>完全免费使用</div>
+      <div class="trust-item"><span class="trust-dot"></span>GTA 本地化数据</div>
+      <div class="trust-item"><span class="trust-dot"></span>中文全程服务</div>
+      <div class="trust-item"><span class="trust-dot"></span>不代替专业建议</div>
+      <div class="trust-item"><span class="trust-dot"></span>数据不被出售</div>
     </div>
   </div>
-</div>
 
-<div class="section section-dark" id="how">
-  <div class="section-inner">
-    <div class="eyebrow eyebrow-light">接入流程</div>
-    <h2 class="section-title section-title-w">3 个工作日，完成交付</h2>
-    <p class="section-body section-body-w" style="margin-bottom:3rem;">从填写信息到 AI SA 上线，全程由 AutocareAI 团队负责，您无需任何技术背景。</p>
-    <div class="steps">
-      <div class="step-card">
-        <div class="step-num">01</div>
-        <div class="step-title">填写门店信息表</div>
-        <div class="step-body">在线填写约 15 分钟，告诉我们您的服务项目、技师背景、营业时间和品牌风格。</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">02</div>
-        <div class="step-title">AutocareAI 完成配置</div>
-        <div class="step-body">我们的团队基于您的信息定制 AI 提示词和知识库，3 个工作日内完成。</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">03</div>
-        <div class="step-title">体验并确认效果</div>
-        <div class="step-body">收到测试链接后，您可以像真实客户一样与 AI SA 对话，确认满意再上线。</div>
-      </div>
-      <div class="step-card">
-        <div class="step-num">04</div>
-        <div class="step-title">一行代码嵌入网站</div>
-        <div class="step-body">将一行 JavaScript 代码粘贴到您的网站，AI SA 气泡即刻出现，开始 24 小时接待。</div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">AutocareAI · Smart for Cars, Heart for You</div>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/onboard.html">商家合作</a>
+      <a href="https://wa.me/16476192775">联系我们</a>
+    </div>
+    <div class="footer-copy">© 2026 AutocareAI · Toronto, Canada</div>
+  </footer>
+
+  <!-- CHAT FAB -->
+  <button id="chat-fab" onclick="toggleChat()" aria-label="立即咨询">💬</button>
+
+  <!-- CHAT WINDOW -->
+  <div id="chat-window">
+    <div class="cw-header">
+      <div class="cw-avatar">A</div>
+      <div class="cw-info">
+        <div class="cw-name">AutocareAI 助手</div>
+        <div class="cw-status"><span class="cw-dot"></span>在线 · 中英文均可</div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="section" id="contact">
-  <div class="section-inner">
-    <div class="cta-card">
-      <h2 class="cta-title">24小时在线的<br>专业 <em style="font-style:normal;color:var(--gold);">SA</em></h2>
-      <p class="cta-sub">先试后买，安心保证，无风险验证效果</p>
-      <div class="cta-actions">
-        <a href="/onboard.html" class="btn-primary">填写门店信息，申请试用 →</a>
-        <a href="https://wa.me/16476192775" class="btn-ghost">WhatsApp 直接咨询</a>
+    <div class="cw-messages" id="cw-messages"></div>
+    <div class="cw-preview-row" id="cw-preview-row" style="display:none;">
+      <div class="cw-preview-chip">
+        <img id="cw-preview-img" src="" alt="预览">
+        <button class="cw-preview-remove" onclick="cwRemoveImage()" aria-label="移除图片">×</button>
       </div>
-      <p class="cta-note">daniel@autocareai.ca · +1 (647) 619-2775 · Toronto, Ontario</p>
     </div>
+    <div class="cw-input-area">
+      <input type="file" id="cw-file-input" accept="image/*" style="display:none" onchange="cwFileSelected(event)">
+      <button class="cw-attach" id="cw-attach" onclick="document.getElementById('cw-file-input').click()" aria-label="上传图片">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <input class="cw-input" id="cw-input" placeholder="问问老哥，或者传张照片……" onkeydown="cwHandleKey(event)">
+      <button class="cw-send" id="cw-send" onclick="cwSend()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+    <div class="cw-powered">Powered by AutocareAI</div>
   </div>
-</div>
 
-<footer>
-  <div class="footer-brand">AutocareAI · 汽车行业 AI 超级客服平台</div>
-  <div class="footer-links">
-    <a href="/privacy.html">Privacy Policy</a>
-    <a href="/onboard.html">门店入驻</a>
-    <a href="https://wa.me/16476192775">联系我们</a>
-  </div>
-  <div class="footer-copy">© 2026 AutocareAI · Toronto, Canada</div>
-</footer>
+  <script>
+    const SYSTEM = `你是 AutocareAI，多伦多华人车主的"私人车辆管家"。你在多伦多修车圈、保险圈、停车圈摸爬滚打了 20 年，看透了各种套路，对新移民和新手极其耐心，爱讲大白话。
+
+你有四大核心能力：
+- 🚗 买车计算器：买车前算清楚真实月成本，避免买完才后悔
+- 🔧 贴身维修管家：解析报价单，用技术经验拆解价格构成，帮你判断合不合理
+- 🛡️ 保险导航：帮新移民选对险种、判断报价、搞懂换险流程
+- 🅿️ 停车助手：看不懂标志、收到罚单、发位置找停车位
+
+核心人设原则：
+- 始终保持"懂行的华人邻家大哥"口吻，不退化为普通 AI 语气
+- 默认用户是完全不懂车、不懂保险、不懂停车规则的"纯小白"
+- 多伦多本地化：维修提 Canadian Tire、PartsSource；保险提 RATESDOTCA、Intact、Belairdirect；停车提 PayByPhone、SpotHero
+- 情绪安抚优先：看到高额报价或罚单容易慌，第一句话先稳住情绪
+- 用户用中文就中文回，用英文就英文回
+- 用户发来图片时（维修报价单、仪表盘警告灯、停车标志、罚单等），先描述你在图片里看到了什么，再给出对应模块的分析`;
+
+    const history = [];
+    let typing = false;
+    let inited = false;
+    let pendingImage = null; // { dataUrl, base64, mediaType }
+    const SHOP_ID = 'demo';
+    const SESSION_ID = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
+
+    function openChat() {
+      const win = document.getElementById('chat-window');
+      win.classList.add('open');
+      document.getElementById('chat-fab').textContent = '✕';
+      if (!inited) { inited = true; cwInit(); }
+      setTimeout(() => document.getElementById('cw-input').focus(), 300);
+    }
+
+    function toggleChat() {
+      const win = document.getElementById('chat-window');
+      const fab = document.getElementById('chat-fab');
+      const isOpen = win.classList.toggle('open');
+      fab.textContent = isOpen ? '✕' : '💬';
+      if (isOpen && !inited) { inited = true; cwInit(); }
+      if (isOpen) setTimeout(() => document.getElementById('cw-input').focus(), 300);
+    }
+
+    function cwInit() {
+      cwAddBot('🚗 朋友你好！老哥是多伦多华人车主的贴身用车管家，专治四大痛点：贴身维修管家、保险导航、买车计算、停车助手。你现在遇到哪块问题？也可以直接把报价单、仪表盘警告灯或者罚单拍照发给我 📷', [
+        '修车报价单帮我看看',
+        '保险怎么选比较合适？',
+        '买什么车合适？帮我算成本',
+        '停车罚单怎么申诉？'
+      ]);
+    }
+
+    function cwAddBot(text, qrs) {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-bot';
+      d.innerHTML = `<div class="cw-bubble">${text.replace(/\n/g,'<br>')}</div><div class="cw-time">AutocareAI · 刚刚</div>`;
+      msgs.appendChild(d);
+      if (qrs && qrs.length) {
+        const qd = document.createElement('div');
+        qd.className = 'cw-msg cw-bot';
+        const qc = document.createElement('div');
+        qc.className = 'cw-quick';
+        qrs.forEach(q => {
+          const b = document.createElement('button');
+          b.className = 'cw-qr';
+          b.textContent = q;
+          b.onclick = () => { qc.parentElement.remove(); qd.remove(); cwHandleMsg(q); };
+          qc.appendChild(b);
+        });
+        qd.appendChild(qc);
+        msgs.appendChild(qd);
+      }
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwAddUser(text, image) {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-user';
+      const imgHtml = image ? `<img class="cw-msg-img" src="${image.dataUrl}" alt="上传的图片" onclick="window.open('${image.dataUrl}','_blank')">` : '';
+      d.innerHTML = `<div class="cw-bubble">${imgHtml}${text ? text.replace(/\n/g,'<br>') : ''}</div><div class="cw-time">你 · 刚刚</div>`;
+      msgs.appendChild(d);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwShowTyping() {
+      const msgs = document.getElementById('cw-messages');
+      const d = document.createElement('div');
+      d.className = 'cw-msg cw-bot cw-typing';
+      d.id = 'cw-typing';
+      d.innerHTML = `<div class="cw-dots"><span></span><span></span><span></span></div>`;
+      msgs.appendChild(d);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function cwHideTyping() {
+      const t = document.getElementById('cw-typing');
+      if (t) t.remove();
+    }
+
+    // 压缩/缩放图片，避免手机原图（常常 3–8MB）直接塞进 base64 请求体
+    function cwResizeImage(file, maxDim = 1600, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const reader = new FileReader();
+        reader.onload = (e) => { img.src = e.target.result; };
+        reader.onerror = reject;
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) { height = Math.round(height * (maxDim / width)); width = maxDim; }
+            else { width = Math.round(width * (maxDim / height)); height = maxDim; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          resolve({ dataUrl, base64: dataUrl.split(',')[1], mediaType: 'image/jpeg' });
+        };
+        img.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function cwFileSelected(e) {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      if (!file.type.startsWith('image/')) { cwAddBot('⚠️ 只能上传图片文件哦，重新选一张吧！'); return; }
+      if (file.size > 10 * 1024 * 1024) { cwAddBot('⚠️ 这张图片有点大（超过10MB），换一张试试？'); return; }
+      try {
+        pendingImage = await cwResizeImage(file);
+        document.getElementById('cw-preview-img').src = pendingImage.dataUrl;
+        document.getElementById('cw-preview-row').style.display = 'block';
+      } catch {
+        cwAddBot('⚠️ 图片处理失败了，再试一次？');
+      }
+    }
+
+    function cwRemoveImage() {
+      pendingImage = null;
+      document.getElementById('cw-preview-row').style.display = 'none';
+    }
+
+    async function cwHandleMsg(text, image) {
+      if (typing) return;
+      typing = true;
+      document.getElementById('cw-send').disabled = true;
+      cwAddUser(text, image);
+
+      const content = image
+        ? [
+            { type: 'image', source: { type: 'base64', media_type: image.mediaType, data: image.base64 } },
+            { type: 'text', text: text || '帮我看看这张图片' }
+          ]
+        : text;
+      history.push({ role: 'user', content });
+
+      cwShowTyping();
+      try {
+        const res = await fetch('https://autocareai-api.dalinma49.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ system: SYSTEM, messages: history, session_id: SESSION_ID, shop: SHOP_ID })
+        });
+        const data = await res.json();
+        cwHideTyping();
+        const reply = data.content?.[0]?.text || '不好意思，暂时连接有问题，稍后再试！';
+        history.push({ role: 'assistant', content: reply });
+        cwAddBot(reply);
+      } catch {
+        cwHideTyping();
+        cwAddBot('不好意思，网络暂时有点问题，稍后再试试！');
+      }
+      typing = false;
+      document.getElementById('cw-send').disabled = false;
+      document.getElementById('cw-input').focus();
+    }
+
+    async function cwSend() {
+      const input = document.getElementById('cw-input');
+      const text = input.value.trim();
+      if ((!text && !pendingImage) || typing) return;
+      input.value = '';
+      const image = pendingImage;
+      pendingImage = null;
+      document.getElementById('cw-preview-row').style.display = 'none';
+      await cwHandleMsg(text, image);
+    }
+
+    function cwHandleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); cwSend(); }
+    }
+
+    // In-app browser detection
+    (function() {
+      var ua = navigator.userAgent || '';
+      var isInApp = /MicroMessenger/i.test(ua) || /Xiaohongshu/i.test(ua) ||
+        /xhsSpeedApp/i.test(ua) || /Weibo/i.test(ua) || /musical_ly/i.test(ua) ||
+        /BytedanceWebview/i.test(ua) || /FBAN|FBAV/i.test(ua) || /Instagram/i.test(ua);
+      if (isInApp) document.getElementById('inapp-banner').classList.add('visible');
+    })();
+  </script>
 
 </body>
 </html>
