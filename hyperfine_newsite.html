@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperfine Autos 弘益车行 — Markham 德系汽车专修</title>
+<meta name="description" content="Hyperfine Autos 弘益车行，Markham 原厂认证德系汽车专修，主修 Audi / BMW / Mercedes-Benz。4.9★ 136条评价，透明报价，24小时AI服务顾问。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16181B;
+    --ink-dim: #565C64;
+    --ink-faint: #8A9098;
+    --paper: #EEF0F3;
+    --paper-raised: #FFFFFF;
+    --paper-sunken: #E4E7EB;
+    --line: rgba(22,24,27,0.13);
+    --line-strong: rgba(22,24,27,0.22);
+    --brass: #A9762E;
+    --brass-ink: #7A5620;
+    --brass-soft: rgba(169,118,46,0.11);
+    --steel: #2F5A78;
+    --steel-soft: rgba(47,90,120,0.09);
+    --good: #3B7A4F;
+    --shadow: 0 1px 2px rgba(22,24,27,0.04), 0 8px 24px rgba(22,24,27,0.06);
+
+    --font-display: 'Big Shoulders Display', 'Noto Sans SC', sans-serif;
+    --font-zh: 'Noto Sans SC', sans-serif;
+    --font-body: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #EEEFF1;
+      --ink-dim: #A6ACB4;
+      --ink-faint: #6D737B;
+      --paper: #101114;
+      --paper-raised: #1A1C20;
+      --paper-sunken: #0B0C0E;
+      --line: rgba(255,255,255,0.10);
+      --line-strong: rgba(255,255,255,0.18);
+      --brass: #D9B679;
+      --brass-ink: #E8CA92;
+      --brass-soft: rgba(217,182,121,0.13);
+      --steel: #8DB3CE;
+      --steel-soft: rgba(141,179,206,0.12);
+      --good: #6FBF86;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EEEFF1;
+    --ink-dim: #A6ACB4;
+    --ink-faint: #6D737B;
+    --paper: #101114;
+    --paper-raised: #1A1C20;
+    --paper-sunken: #0B0C0E;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.18);
+    --brass: #D9B679;
+    --brass-ink: #E8CA92;
+    --brass-soft: rgba(217,182,121,0.13);
+    --steel: #8DB3CE;
+    --steel-soft: rgba(141,179,206,0.12);
+    --good: #6FBF86;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.45);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  ::selection { background: var(--brass-soft); color: var(--ink); }
+
+  /* ---------- reveal-on-scroll (progressive enhancement) ---------- */
+  body:not(.motion-ready) .reveal { opacity: 1; transform: none; }
+  .motion-ready .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .motion-ready .reveal.in-view { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .motion-ready .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---------- corner bracket frame ---------- */
+  .bracket-frame { position: relative; }
+  .corner { position: absolute; width: 22px; height: 22px; border: 2px solid var(--brass); opacity: .5; pointer-events: none; }
+  .corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+  .corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--brass-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--brass); display: inline-block; }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: sticky; top: 0; z-index: 40;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 28px; max-width: 1120px; margin: 0 auto; gap: 20px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-mark { width: 30px; height: 30px; flex-shrink: 0; }
+  .brand-word { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: .01em; color: var(--ink); line-height: 1; }
+  .brand-word small { display: block; font-family: var(--font-zh); font-weight: 500; font-size: 11px; letter-spacing: .04em; color: var(--ink-dim); margin-top: 3px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { text-decoration: none; font-size: 14px; font-weight: 500; color: var(--ink-dim); transition: color .15s; }
+  .nav-links a:hover { color: var(--brass-ink); }
+  .nav-cta {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 600; text-decoration: none;
+    color: var(--paper-raised); background: var(--brass-ink); padding: 9px 16px; border-radius: 3px;
+    letter-spacing: .02em; white-space: nowrap; transition: filter .15s;
+  }
+  .nav-cta:hover { filter: brightness(1.08); }
+  @media (max-width: 760px) { .nav-links { display: none; } }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 46px 46px;
+    background-position: center;
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 0%, transparent 0%, var(--paper) 92%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 84px 28px 72px; }
+  .hero-frame { margin: 0; padding: 0; }
+  .hero-frame .corner { opacity: .38; }
+  .hero-eyebrow { justify-content: center; margin-bottom: 26px; }
+  .hero-eyebrow::before { display: none; }
+  .hero h1 { text-align: center; }
+  .hero-en {
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(52px, 9vw, 108px);
+    line-height: .92; letter-spacing: -.01em; color: var(--ink);
+  }
+  .hero-zh {
+    font-family: var(--font-zh); font-weight: 900; font-size: clamp(24px, 3.6vw, 34px);
+    color: var(--brass-ink); margin-top: 10px; letter-spacing: .03em;
+  }
+  .hero-tagline {
+    text-align: center; max-width: 560px; margin: 26px auto 0; color: var(--ink-dim); font-size: 16px;
+  }
+  .hero-tagline .en { font-family: var(--font-mono); font-size: 13px; letter-spacing: .04em; display: block; margin-top: 6px; color: var(--ink-faint); }
+
+  .hero-ctas { display: flex; justify-content: center; gap: 14px; margin-top: 38px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--font-mono); font-size: 14px; font-weight: 600; letter-spacing: .02em;
+    padding: 13px 24px; border-radius: 3px; text-decoration: none; display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid transparent; cursor: pointer; transition: filter .15s, transform .15s, background .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--brass-ink); color: var(--paper-raised); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--brass); color: var(--brass-ink); }
+
+  .hero-gauge { display: flex; justify-content: center; align-items: stretch; gap: 0; margin-top: 64px; flex-wrap: wrap; }
+  .gauge-cell {
+    display: flex; flex-direction: column; align-items: center; padding: 0 34px; text-align: center;
+    border-right: 1px solid var(--line);
+  }
+  .gauge-cell:last-child { border-right: none; }
+  .gauge-num { font-family: var(--font-mono); font-weight: 600; font-size: 30px; color: var(--ink); font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 3px; }
+  .gauge-num .unit { font-size: 15px; color: var(--brass-ink); }
+  .gauge-label { font-size: 12px; color: var(--ink-faint); margin-top: 6px; font-family: var(--font-mono); letter-spacing: .04em; }
+  .brand-chips { display: flex; gap: 10px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+  .chip {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .07em; font-weight: 500;
+    padding: 6px 13px; border-radius: 3px; border: 1px solid var(--line-strong); color: var(--ink-dim);
+  }
+
+  /* ---------- section shell ---------- */
+  section { padding: 88px 0; }
+  .section-head { max-width: 640px; margin-bottom: 48px; }
+  .section-title-zh { font-family: var(--font-zh); font-weight: 900; font-size: clamp(26px, 3.4vw, 36px); margin-top: 10px; }
+  .section-title-en { font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; color: var(--ink-faint); text-transform: uppercase; margin-top: 8px; }
+
+  /* ---------- philosophy ---------- */
+  .philosophy { background: var(--paper-raised); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .philosophy-grid { display: grid; grid-template-columns: 1.1fr 1.4fr; gap: 64px; align-items: start; }
+  @media (max-width: 820px) { .philosophy-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .philosophy-quote {
+    font-family: var(--font-zh); font-weight: 900; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.28;
+    color: var(--ink);
+  }
+  .philosophy-quote span { color: var(--brass-ink); }
+  .philosophy-body { color: var(--ink-dim); font-size: 15.5px; line-height: 1.85; }
+  .philosophy-body p + p { margin-top: 16px; }
+  .philosophy-body strong { color: var(--ink); font-weight: 600; }
+  .name-etym {
+    margin-top: 22px; padding: 14px 16px; background: var(--brass-soft); border-left: 2px solid var(--brass);
+    font-size: 13.5px; color: var(--ink-dim); border-radius: 0 3px 3px 0;
+  }
+  .name-etym b { color: var(--ink); font-family: var(--font-mono); font-weight: 600; }
+
+  /* ---------- services table ---------- */
+  .svc-table { border-top: 1px solid var(--line-strong); }
+  .svc-row {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 20px; align-items: center;
+    padding: 18px 4px; border-bottom: 1px solid var(--line); transition: background .15s, padding-left .15s;
+  }
+  .svc-row:hover { background: var(--brass-soft); padding-left: 12px; }
+  .svc-name-zh { font-family: var(--font-zh); font-weight: 600; font-size: 16px; }
+  .svc-name-en { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 3px; letter-spacing: .02em; }
+  .svc-price { font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .svc-vs { font-family: var(--font-mono); font-size: 11px; color: var(--good); text-align: right; white-space: nowrap; }
+  @media (max-width: 620px) {
+    .svc-row { grid-template-columns: 1fr; gap: 4px; }
+    .svc-price, .svc-vs { text-align: left; }
+  }
+  .svc-note { margin-top: 22px; font-size: 13px; color: var(--ink-faint); font-family: var(--font-mono); }
+
+  /* ---------- compare ---------- */
+  .compare { background: var(--paper-sunken); }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-strong); border: 1px solid var(--line-strong); border-radius: 4px; overflow: hidden; }
+  @media (max-width: 700px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-col { background: var(--paper-raised); padding: 30px 28px; }
+  .compare-col.hf { position: relative; }
+  .compare-col.hf::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--brass); }
+  .compare-head { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 18px; }
+  .compare-col.hf .compare-head { color: var(--brass-ink); }
+  .compare-item { display: flex; gap: 10px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 14.5px; color: var(--ink-dim); }
+  .compare-item:first-of-type { border-top: none; }
+  .compare-item .mark { font-family: var(--font-mono); font-weight: 600; flex-shrink: 0; width: 16px; }
+  .compare-col.hf .compare-item .mark { color: var(--good); }
+  .compare-col:not(.hf) .compare-item .mark { color: var(--ink-faint); }
+
+  /* ---------- AI feature ---------- */
+  .ai-section { position: relative; overflow: hidden; }
+  .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  @media (max-width: 820px) { .ai-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .ai-copy .section-title-zh { margin-top: 10px; }
+  .ai-features { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  .ai-features li { display: flex; gap: 12px; font-size: 14.5px; color: var(--ink-dim); align-items: flex-start; }
+  .ai-features .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brass); margin-top: 8px; flex-shrink: 0; }
+  .ai-features b { color: var(--ink); font-weight: 600; }
+  .ai-mock {
+    background: var(--paper-raised); border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px;
+    box-shadow: var(--shadow);
+  }
+  .ai-mock-inner { background: var(--paper-sunken); border-radius: 6px; padding: 20px; }
+  .ai-mock-bubble { background: var(--paper-raised); border-radius: 10px; border-bottom-left-radius: 3px; padding: 12px 15px; font-size: 13.5px; color: var(--ink-dim); max-width: 84%; box-shadow: var(--shadow); }
+  .ai-mock-bubble + .ai-mock-bubble { margin-top: 10px; }
+  .ai-mock-user { margin-left: auto; background: var(--brass-ink); color: var(--paper-raised); border-radius: 10px; border-bottom-right-radius: 3px; padding: 12px 15px; font-size: 13.5px; max-width: 74%; margin-top: 10px; }
+  .ai-try-btn { margin-top: 18px; width: 100%; }
+
+  /* ---------- location ---------- */
+  .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  @media (max-width: 820px) { .location-grid { grid-template-columns: 1fr; gap: 36px; } }
+  .info-row { display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .info-row:first-child { border-top: none; padding-top: 0; }
+  .info-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); width: 90px; flex-shrink: 0; padding-top: 2px; }
+  .info-value { font-size: 15px; color: var(--ink); }
+  .info-value a { text-decoration: none; color: var(--brass-ink); font-weight: 600; }
+  .hours-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13.5px; }
+  .hours-table td { padding: 5px 0; color: var(--ink-dim); }
+  .hours-table td:last-child { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .hours-table tr.today td { color: var(--brass-ink); font-weight: 600; }
+
+  .map-panel {
+    background: var(--paper-raised); border: 1px solid var(--line-strong); border-radius: 8px; padding: 32px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; gap: 16px;
+  }
+  .pin-mark { width: 54px; height: 54px; }
+  .map-panel .addr { font-size: 14px; color: var(--ink-dim); line-height: 1.6; }
+  .map-panel .plus-code { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-faint); }
+
+  /* ---------- footer ---------- */
+  footer { background: var(--paper-sunken); border-top: 1px solid var(--line); padding: 48px 0 28px; }
+  .footer-grid { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; flex-wrap: wrap; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-tagline { font-size: 13px; color: var(--ink-faint); margin-top: 8px; max-width: 300px; }
+  .footer-contact { font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim); display: flex; flex-direction: column; gap: 6px; text-align: right; }
+  .footer-contact a { text-decoration: none; }
+  .footer-contact a:hover { color: var(--brass-ink); }
+  .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-faint); font-family: var(--font-mono); flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 620px) { .footer-grid { flex-direction: column; } .footer-contact { text-align: left; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 30 30" fill="none">
+        <circle cx="15" cy="15" r="13.5" stroke="var(--brass)" stroke-width="1.4"/>
+        <path d="M15 4.5V9M15 21V25.5M4.5 15H9M21 15H25.5" stroke="var(--brass)" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="15" cy="15" r="3.4" fill="var(--brass)"/>
+      </svg>
+      <span class="brand-word">HYPERFINE<small>弘益车行</small></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">关于我们</a></li>
+      <li><a href="#services">服务与价格</a></li>
+      <li><a href="#ai">AI 服务顾问</a></li>
+      <li><a href="#location">位置与时间</a></li>
+    </ul>
+    <a class="nav-cta" href="tel:9055540188">(905) 554-0188</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-inner bracket-frame hero-frame">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <div class="eyebrow hero-eyebrow">MARKHAM · 德系专修 · EST. 2015</div>
+    <h1>
+      <span class="hero-en">HYPERFINE AUTOS</span>
+      <span class="hero-zh">弘益车行 — 原厂认证德系汽车专修</span>
+    </h1>
+    <p class="hero-tagline">你在意的，我们更用心。原厂经销商出身的技师团队，专修 Audi / BMW / Mercedes-Benz，只修真正需要修的地方。
+      <span class="en">WE CARE WHAT YOU CARE</span>
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="tel:9055540188">📞 致电预约 (905) 554-0188</a>
+      <button class="btn btn-ghost" onclick="var f=document.getElementById('aca-hf-fab'); if(f){f.click();}">💬 问问 AI 服务顾问</button>
+    </div>
+    <div class="hero-gauge reveal">
+      <div class="gauge-cell">
+        <div class="gauge-num">4.9<span class="unit">★</span></div>
+        <div class="gauge-label">GOOGLE RATING</div>
+      </div>
+      <div class="gauge-cell">
+        <div class="gauge-num">136</div>
+        <div class="gauge-label">条真实评价</div>
+      </div>
+      <div class="gauge-cell">
+        <div class="gauge-num">2015</div>
+        <div class="gauge-label">创立年份</div>
+      </div>
+      <div class="gauge-cell">
+        <div class="gauge-num">24<span class="unit">/7</span></div>
+        <div class="gauge-label">AI 在线咨询</div>
+      </div>
+    </div>
+    <div class="brand-chips reveal">
+      <span class="chip">AUDI</span><span class="chip">BMW</span><span class="chip">MERCEDES-BENZ</span>
+    </div>
+  </div>
+</header>
+
+<section class="philosophy" id="about">
+  <div class="container philosophy-grid reveal">
+    <div>
+      <div class="eyebrow">关于弘益 / ABOUT</div>
+      <p class="philosophy-quote">我们只修<span>真正需要</span>修的地方。</p>
+    </div>
+    <div class="philosophy-body">
+      <p><strong>弘益车行由来自 Audi、BMW、Mercedes-Benz 原厂经销商的资深技师团队创立</strong>，把 4S 店的诊断标准和维修工艺，带到一家更懂车主、也更实惠的独立车行。我们的技师都持有原厂认证，使用与经销商同等规格的诊断设备和零件，但价格通常比 4S 店低 30%–50%。</p>
+      <p>我们相信信任来自于被听懂——车主看得懂问题出在哪，也看得懂账单上的每一项，才会真正放心把车交给我们。这也是为什么我们把这套判断逻辑做进了 24 小时在线的 AI 服务顾问，让你在到店之前，先把情况搞清楚。</p>
+      <div class="name-etym">
+        <b>关于"Hyperfine"这个名字</b> — 借用了物理学中"超精细结构"（hyperfine structure）的概念：用仪器级的精度，去分辨那些容易被忽略的细微差别。这也是我们诊断每一台车的方式。
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">价格参考 / REFERENCE PRICING</div>
+      <h2 class="section-title-zh">服务与参考价格</h2>
+      <div class="section-title-en">Actual quote confirmed after in-person diagnosis</div>
+    </div>
+    <div class="svc-table">
+      <div class="svc-row">
+        <div><div class="svc-name-zh">原厂级电脑诊断</div><div class="svc-name-en">FACTORY-LEVEL COMPUTER DIAGNOSTICS</div></div>
+        <div class="svc-price">$80 – $120</div>
+        <div class="svc-vs">4S店 $150–200</div>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name-zh">合成机油保养</div><div class="svc-name-en">SYNTHETIC OIL CHANGE · OEM-SPEC FLUIDS</div></div>
+        <div class="svc-price">$120 – $180</div>
+        <div class="svc-vs">4S店 $200–350</div>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name-zh">前刹车片 + 刹车碟更换</div><div class="svc-name-en">FRONT BRAKE PADS + ROTORS</div></div>
+        <div class="svc-price">$500 – $800</div>
+        <div class="svc-vs">4S店 $1,000–1,500</div>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name-zh">四轮定位</div><div class="svc-name-en">FOUR-WHEEL ALIGNMENT</div></div>
+        <div class="svc-price">$100 – $130</div>
+        <div class="svc-vs">&nbsp;</div>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name-zh">换季轮胎更换（自备轮毂）</div><div class="svc-name-en">SEASONAL TIRE SWAP · OWN RIMS</div></div>
+        <div class="svc-price">$60 – $80</div>
+        <div class="svc-vs">&nbsp;</div>
+      </div>
+      <div class="svc-row">
+        <div><div class="svc-name-zh">发动机 / 变速箱维修，悬挂转向，空调系统，买车前检查（PPI）</div><div class="svc-name-en">ENGINE / TRANSMISSION · SUSPENSION · A/C · PRE-PURCHASE INSPECTION</div></div>
+        <div class="svc-price">现场报价</div>
+        <div class="svc-vs">&nbsp;</div>
+      </div>
+    </div>
+    <div class="svc-note">* 以上为 GTA 市场参考区间，具体报价需现场诊断后确认。想先了解自己的情况？点击右下角头像直接问 AI 服务顾问。</div>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="container reveal">
+    <div class="section-head">
+      <div class="eyebrow">为什么选择独立车行 / WHY INDEPENDENT</div>
+      <h2 class="section-title-zh">同样的诊断标准，不一样的账单</h2>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="compare-head">4S 店 / DEALER</div>
+        <div class="compare-item"><span class="mark">＋</span>原厂配件与工艺标准</div>
+        <div class="compare-item"><span class="mark">－</span>价格普遍高 30%–50%</div>
+        <div class="compare-item"><span class="mark">－</span>预约排期长，等待时间不确定</div>
+        <div class="compare-item"><span class="mark">－</span>常规套餐式报价，不易问清具体原因</div>
+      </div>
+      <div class="compare-col hf">
+        <div class="compare-head">弘益车行 / HYPERFINE</div>
+        <div class="compare-item"><span class="mark">✓</span>原厂认证技师，同等诊断设备</div>
+        <div class="compare-item"><span class="mark">✓</span>价格透明，只修真正需要修的</div>
+        <div class="compare-item"><span class="mark">✓</span>AI 服务顾问 24 小时先了解情况</div>
+        <div class="compare-item"><span class="mark">✓</span>中英双语沟通，讲清楚每一项</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ai-section" id="ai">
+  <div class="container ai-grid reveal">
+    <div class="ai-copy">
+      <div class="eyebrow">AI 服务顾问 / AI SERVICE ADVISOR</div>
+      <h2 class="section-title-zh">有问题，先问问弘益的 AI</h2>
+      <ul class="ai-features">
+        <li><span class="dot"></span><span><b>24 小时在线</b> — 下班后、周末、假期，随时能问，不再错过咨询和预约。</span></li>
+        <li><span class="dot"></span><span><b>中英双语无缝切换</b> — 用你习惯的语言描述问题，AI 自动识别回应。</span></li>
+        <li><span class="dot"></span><span><b>拍照初判</b> — 仪表盘警示灯、报价单看不懂？拍张照片发过来，先有个方向。</span></li>
+        <li><span class="dot"></span><span><b>只做初步判断，不替你做决定</b> — 具体报价和维修方案，最终都会引导你联系门店确认。</span></li>
+      </ul>
+      <button class="btn btn-primary ai-try-btn" onclick="var f=document.getElementById('aca-hf-fab'); if(f){f.click();}">💬 点击右下角头像，现在就试试</button>
+    </div>
+    <div class="ai-mock">
+      <div class="ai-mock-inner">
+        <div class="ai-mock-bubble">Hi！我是弘益车行的 AI 服务顾问，主修 Audi / BMW / Mercedes-Benz，技师都来自原厂经销商。有什么可以帮你？</div>
+        <div class="ai-mock-user">仪表盘的发动机灯亮了，还能开吗？</div>
+        <div class="ai-mock-bubble">先别慌——如果灯是常亮（不是闪烁）而且车况正常，通常可以短距离开过来，但建议尽快做个电脑诊断确认，$80–$120，比 4S 店便宜不少。要帮你看一下预约时间吗？</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="container location-grid reveal">
+    <div>
+      <div class="eyebrow">位置与时间 / VISIT US</div>
+      <h2 class="section-title-zh" style="margin-bottom:26px;">位置与营业时间</h2>
+      <div class="info-row">
+        <div class="info-label">地址</div>
+        <div class="info-value">3 Heritage Rd, Unit 3<br>Markham, ON L3P 1M3</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">电话</div>
+        <div class="info-value"><a href="tel:9055540188">(905) 554-0188</a></div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">营业时间</div>
+        <div class="info-value" style="width:100%;">
+          <table class="hours-table">
+            <tr><td>周一 – 周五</td><td>9:00 – 18:00</td></tr>
+            <tr><td>周六</td><td>9:00 – 17:00</td></tr>
+            <tr><td>周日</td><td>休息</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="map-panel">
+      <svg class="pin-mark" viewBox="0 0 54 54" fill="none">
+        <path d="M27 6C17.6 6 10 13.6 10 23c0 12.5 17 24.8 17 24.8S44 35.5 44 23C44 13.6 36.4 6 27 6z" stroke="var(--brass)" stroke-width="1.6"/>
+        <circle cx="27" cy="23" r="7" stroke="var(--brass)" stroke-width="1.6"/>
+      </svg>
+      <div class="addr">Hyperfine Autos 弘益车行<br>3 Heritage Rd #3, Markham, ON L3P 1M3</div>
+      <div class="plus-code">VPCC+64 万锦</div>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/place/Hyperfine+Autos+%E5%BC%98%E7%9B%8A%E8%BD%A6%E8%A1%8C/@43.8705332,-79.2796383,514m/data=!3m2!1e3!4b1!4m6!3m5!1s0x89d4d671e62064cd:0xc49066d71ff6bfd3!8m2!3d43.8705332!4d-79.2796383!16s%2Fg%2F11cn5lvf3h" target="_blank" rel="noopener">在 Google 地图中打开 →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <svg class="brand-mark" viewBox="0 0 30 30" fill="none" style="width:24px;height:24px;">
+            <circle cx="15" cy="15" r="13.5" stroke="var(--brass)" stroke-width="1.4"/>
+            <path d="M15 4.5V9M15 21V25.5M4.5 15H9M21 15H25.5" stroke="var(--brass)" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="15" cy="15" r="3.4" fill="var(--brass)"/>
+          </svg>
+          <span class="brand-word">HYPERFINE<small>弘益车行</small></span>
+        </div>
+        <div class="footer-tagline">Markham 原厂认证德系汽车专修 · We Care What You Care</div>
+      </div>
+      <div class="footer-contact">
+        <a href="tel:9055540188">(905) 554-0188</a>
+        <span>3 Heritage Rd #3, Markham, ON L3P 1M3</span>
+        <span>周一–周五 9:00–18:00 · 周六 9:00–17:00</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Hyperfine Autos 弘益车行</span>
+      <span>AI SERVICE ADVISOR POWERED BY AUTOCAREAI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  document.body.classList.add('motion-ready');
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add('in-view'); });
+  }
+
+  // Highlight today's row in the hours table
+  try {
+    var dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
+    var today = dayNames[new Date().getDay()];
+    document.querySelectorAll('.hours-table tr').forEach(function (tr) {
+      var label = tr.children[0] && tr.children[0].textContent;
+      if (label && (label === today || (label.indexOf('–') > -1 && label.indexOf(today) > -1))) {
+        tr.classList.add('today');
+      }
+    });
+  } catch (e) {}
+})();
+</script>
+
+<!-- ===== AutocareAI embeddable chat widget — Hyperfine Autos ===== -->
+<script src="widget-hyperfine.js" defer></script>
+
+</body>
+</html>
