@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>弘益车行 · 网站内容管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EEF0F3; --paper-raised: #FFFFFF; --ink: #16181B; --ink-dim: #565B62; --ink-faint: #8A8F97;
+    --brass: #A9762E; --brass-ink: #7A5620; --brass-soft: #F4EBDC;
+    --good: #2E7D4F; --good-soft: #E7F4EC; --bad: #B3402A; --bad-soft: #FBEAE6;
+    --line: #DBDEE3; --shadow: 0 1px 2px rgba(20,20,22,.06), 0 8px 24px -12px rgba(20,20,22,.12);
+    --radius: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101114; --paper-raised: #1A1C20; --ink: #EEEFF1; --ink-dim: #A3A8B0; --ink-faint: #6D727A;
+      --brass: #D9B679; --brass-ink: #E8CA92; --brass-soft: #262115;
+      --good: #4CAF77; --good-soft: #16261C; --bad: #E0705A; --bad-soft: #2A1815;
+      --line: #2C2F35; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101114; --paper-raised: #1A1C20; --ink: #EEEFF1; --ink-dim: #A3A8B0; --ink-faint: #6D727A;
+    --brass: #D9B679; --brass-ink: #E8CA92; --brass-soft: #262115;
+    --good: #4CAF77; --good-soft: #16261C; --bad: #E0705A; --bad-soft: #2A1815;
+    --line: #2C2F35; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    padding-bottom: 100px;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  header.top {
+    background: var(--paper-raised); border-bottom: 1px solid var(--line);
+    padding: 18px 20px; position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  header.top h1 { font-size: 17px; margin: 0; font-weight: 700; }
+  header.top .sub { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 20px 16px; }
+
+  .gate {
+    max-width: 380px; margin: 15vh auto; background: var(--paper-raised); border: 1px solid var(--line);
+    border-radius: var(--radius); box-shadow: var(--shadow); padding: 32px 26px; text-align: center;
+  }
+  .gate h2 { font-size: 18px; margin: 0 0 6px; }
+  .gate p { font-size: 13px; color: var(--ink-dim); margin: 0 0 20px; line-height: 1.6; }
+  .gate input { width: 100%; padding: 12px 14px; font-size: 16px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--paper); color: var(--ink); margin-bottom: 12px; }
+  .gate button { width: 100%; padding: 12px; font-size: 15px; font-weight: 700; border: none;
+    border-radius: 6px; background: var(--brass); color: #1a1408; cursor: pointer; }
+  .gate .err { color: var(--bad); font-size: 12.5px; margin-top: 10px; min-height: 16px; }
+
+  section.card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 22px 20px; margin-bottom: 16px;
+  }
+  section.card h2 { font-size: 15px; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
+  section.card .hint { font-size: 12.5px; color: var(--ink-faint); margin: 0 0 16px; line-height: 1.6; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12.5px; color: var(--ink-dim); margin-bottom: 6px; font-weight: 500; }
+  .field input[type="text"], .field textarea {
+    width: 100%; padding: 10px 12px; font-size: 14.5px; border: 1px solid var(--line);
+    border-radius: 6px; background: var(--paper); color: var(--ink); font-family: inherit;
+  }
+  .field textarea { min-height: 70px; resize: vertical; line-height: 1.6; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .row3 { grid-template-columns: 1fr; } }
+
+  .list-item {
+    border: 1px solid var(--line); border-radius: 6px; padding: 14px; margin-bottom: 10px; position: relative;
+    background: var(--paper);
+  }
+  .list-item .del {
+    position: absolute; top: 10px; right: 10px; width: 24px; height: 24px; border-radius: 50%;
+    border: none; background: var(--bad-soft); color: var(--bad); font-size: 14px; cursor: pointer; line-height: 1;
+  }
+  .add-btn {
+    width: 100%; padding: 10px; border: 1.5px dashed var(--line); border-radius: 6px; background: none;
+    color: var(--brass-ink); font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .idx-badge {
+    display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
+    border-radius: 4px; background: var(--brass-soft); color: var(--brass-ink); font-size: 11px; font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .photo-box { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .photo-box img { width: 160px; height: 100px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
+  .photo-box .upload-btn {
+    padding: 10px 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper);
+    color: var(--ink); font-size: 13.5px; cursor: pointer; font-weight: 600;
+  }
+  .photo-box input[type="file"] { display: none; }
+
+  .footer-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; background: var(--paper-raised); border-top: 1px solid var(--line);
+    padding: 14px 16px; display: flex; align-items: center; justify-content: center; gap: 14px; z-index: 30;
+  }
+  .footer-bar button {
+    padding: 13px 34px; font-size: 15px; font-weight: 700; border: none; border-radius: 7px;
+    background: var(--brass); color: #1a1408; cursor: pointer;
+  }
+  .footer-bar button:disabled { opacity: .5; cursor: default; }
+  .status-msg { font-size: 13px; }
+  .status-msg.ok { color: var(--good); }
+  .status-msg.err { color: var(--bad); }
+
+  .banner {
+    max-width: 720px; margin: 16px auto 0; padding: 10px 14px; border-radius: 6px; font-size: 13px; text-align: center;
+  }
+  .banner.ok { background: var(--good-soft); color: var(--good); }
+  .banner.err { background: var(--bad-soft); color: var(--bad); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <h2>弘益车行 · 网站内容管理</h2>
+  <p>输入管理密码进入。密码找 Daniel 要，第一次登录后这台设备会记住。</p>
+  <input id="pwInput" type="password" placeholder="管理密码" autocomplete="current-password">
+  <button id="pwSubmit">进入</button>
+  <div class="err" id="pwErr"></div>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <div>
+      <h1>弘益车行 · 网站内容管理</h1>
+      <div class="sub">改完点最下面「保存并发布」，几秒内网站就会更新</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div id="loadBanner" class="banner" hidden></div>
+
+    <section class="card">
+      <h2>联系方式</h2>
+      <p class="hint">这几项会同时更新到网站顶部导航、"位置与营业时间"板块和页脚三个地方，改一次全部生效。</p>
+      <div class="field"><label>电话</label><input type="text" id="f-phone"></div>
+      <div class="row2">
+        <div class="field"><label>地址第一行（街道门牌）</label><input type="text" id="f-address1"></div>
+        <div class="field"><label>地址第二行（城市/邮编）</label><input type="text" id="f-address2"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>门店数据</h2>
+      <p class="hint">这几项会显示在首页顶部和门店照片上。<strong>注意：</strong>下面 FAQ 文字里也提到了评分/年份这些数字，改这里不会自动改 FAQ 里的文字，需要的话要去 FAQ 那段自己改一下对应的字。</p>
+      <div class="row3">
+        <div class="field"><label>Google 评分</label><input type="text" id="f-rating"></div>
+        <div class="field"><label>评价数量</label><input type="text" id="f-reviewCount"></div>
+        <div class="field"><label>创立年份</label><input type="text" id="f-foundedYear"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>营业时间</h2>
+      <p class="hint">可以按需要加一行（比如节假日特殊安排），也可以删掉不需要的行。</p>
+      <div id="hoursList"></div>
+      <button type="button" class="add-btn" id="addHours">+ 添加一行</button>
+    </section>
+
+    <section class="card">
+      <h2>服务与参考价格</h2>
+      <p class="hint">一共 6 项，只能改名称和价格文字，顺序和项目数量是固定的（如果要增减服务项目，找 Daniel 帮忙调整版式）。</p>
+      <div id="servicesList"></div>
+    </section>
+
+    <section class="card">
+      <h2>常见问题 FAQ</h2>
+      <p class="hint">一共 8 条，只能改问题和回答的文字，数量固定。</p>
+      <div id="faqList"></div>
+    </section>
+
+    <section class="card">
+      <h2>门店照片</h2>
+      <p class="hint">建议上传横向拍摄的门店/车行照片，会自动压缩，不用担心文件太大。</p>
+      <div class="photo-box">
+        <img id="photoPreview" src="" alt="门店照片预览">
+        <label class="upload-btn">
+          选择新照片
+          <input type="file" id="photoInput" accept="image/*">
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer-bar">
+    <button id="saveBtn">保存并发布到网站</button>
+    <span class="status-msg" id="statusMsg"></span>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var CONTENT_URL = 'https://autocareai-api.dalinma49.workers.dev/api/hyperfine/content';
+  var PW_KEY = 'aca_hyperfine_admin_pw';
+  var state = { data: null, password: '' };
+
+  // ---------- password gate ----------
+  var gate = document.getElementById('gate');
+  var app = document.getElementById('app');
+  var pwInput = document.getElementById('pwInput');
+  var pwErr = document.getElementById('pwErr');
+
+  function tryEnter(pw) {
+    state.password = pw;
+    gate.hidden = true;
+    app.hidden = false;
+    loadContent();
+  }
+
+  document.getElementById('pwSubmit').addEventListener('click', function () {
+    var pw = pwInput.value.trim();
+    if (!pw) { pwErr.textContent = '请输入密码'; return; }
+    pwErr.textContent = '';
+    tryEnter(pw);
+  });
+  pwInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') document.getElementById('pwSubmit').click();
+  });
+
+  try {
+    var saved = localStorage.getItem(PW_KEY);
+    if (saved) { pwInput.value = saved; }
+  } catch (e) {}
+
+  // ---------- load current content ----------
+  function loadContent() {
+    var banner = document.getElementById('loadBanner');
+    fetch(CONTENT_URL, { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (data) {
+        state.data = data;
+        render(data);
+      })
+      .catch(function () {
+        banner.hidden = false;
+        banner.className = 'banner err';
+        banner.textContent = '暂时读取不到网站当前内容（可能是后台还没配置好），下面表单是空的，先联系 Daniel 确认一下。';
+      });
+  }
+
+  function render(d) {
+    document.getElementById('f-phone').value = d.phone || '';
+    document.getElementById('f-address1').value = d.address1 || '';
+    document.getElementById('f-address2').value = d.address2 || '';
+    document.getElementById('f-rating').value = d.rating || '';
+    document.getElementById('f-reviewCount').value = d.reviewCount || '';
+    document.getElementById('f-foundedYear').value = d.foundedYear || '';
+
+    renderHours(d.hours || []);
+    renderServices(d.services || []);
+    renderFaq(d.faq || []);
+
+    document.getElementById('photoPreview').src = d.storefrontPhoto || '';
+  }
+
+  // ---------- hours (add/remove allowed) ----------
+  var hoursList = document.getElementById('hoursList');
+  function renderHours(hours) {
+    hoursList.innerHTML = '';
+    hours.forEach(function (h) { addHoursRow(h.day, h.time); });
+  }
+  function addHoursRow(day, time) {
+    var div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML =
+      '<button type="button" class="del">×</button>' +
+      '<div class="row2">' +
+        '<div class="field"><label>日期</label><input type="text" class="h-day" value="' + escAttr(day || '') + '"></div>' +
+        '<div class="field"><label>时间</label><input type="text" class="h-time" value="' + escAttr(time || '') + '"></div>' +
+      '</div>';
+    div.querySelector('.del').addEventListener('click', function () { div.remove(); });
+    hoursList.appendChild(div);
+  }
+  document.getElementById('addHours').addEventListener('click', function () { addHoursRow('', ''); });
+
+  // ---------- services (fixed count, text only) ----------
+  var servicesList = document.getElementById('servicesList');
+  function renderServices(services) {
+    servicesList.innerHTML = '';
+    services.forEach(function (s, i) {
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML =
+        '<div class="field"><label><span class="idx-badge">' + (i + 1) + '</span>服务名称</label>' +
+          '<input type="text" class="s-name" value="' + escAttr(s.name || '') + '"></div>' +
+        '<div class="field" style="margin-bottom:0;"><label>参考价格</label>' +
+          '<input type="text" class="s-price" value="' + escAttr(s.price || '') + '"></div>';
+      servicesList.appendChild(div);
+    });
+  }
+
+  // ---------- FAQ (fixed count, text only) ----------
+  var faqList = document.getElementById('faqList');
+  function renderFaq(faq) {
+    faqList.innerHTML = '';
+    faq.forEach(function (f, i) {
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML =
+        '<div class="field"><label><span class="idx-badge">' + (i + 1) + '</span>问题</label>' +
+          '<input type="text" class="q-text" value="' + escAttr(f.q || '') + '"></div>' +
+        '<div class="field" style="margin-bottom:0;"><label>回答</label>' +
+          '<textarea class="a-text">' + escHtml(f.a || '') + '</textarea></div>';
+      faqList.appendChild(div);
+    });
+  }
+
+  function escAttr(s) { return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // ---------- photo upload + client-side compression ----------
+  document.getElementById('photoInput').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+      var img = new Image();
+      img.onload = function () {
+        var maxW = 1400;
+        var scale = Math.min(1, maxW / img.width);
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        var dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+        document.getElementById('photoPreview').src = dataUrl;
+        document.getElementById('photoPreview').dataset.newPhoto = dataUrl;
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ---------- collect + save ----------
+  function collect() {
+    var hours = Array.prototype.map.call(hoursList.querySelectorAll('.list-item'), function (row) {
+      return { day: row.querySelector('.h-day').value.trim(), time: row.querySelector('.h-time').value.trim() };
+    }).filter(function (h) { return h.day || h.time; });
+
+    var services = Array.prototype.map.call(servicesList.querySelectorAll('.list-item'), function (row) {
+      return { name: row.querySelector('.s-name').value.trim(), price: row.querySelector('.s-price').value.trim() };
+    });
+
+    var faq = Array.prototype.map.call(faqList.querySelectorAll('.list-item'), function (row) {
+      return { q: row.querySelector('.q-text').value.trim(), a: row.querySelector('.a-text').value.trim() };
+    });
+
+    var photoEl = document.getElementById('photoPreview');
+    var storefrontPhoto = photoEl.dataset.newPhoto || (state.data && state.data.storefrontPhoto) || '';
+
+    return {
+      phone: document.getElementById('f-phone').value.trim(),
+      address1: document.getElementById('f-address1').value.trim(),
+      address2: document.getElementById('f-address2').value.trim(),
+      rating: document.getElementById('f-rating').value.trim(),
+      reviewCount: document.getElementById('f-reviewCount').value.trim(),
+      foundedYear: document.getElementById('f-foundedYear').value.trim(),
+      hours: hours,
+      services: services,
+      faq: faq,
+      storefrontPhoto: storefrontPhoto
+    };
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', function () {
+    var btn = this;
+    var statusMsg = document.getElementById('statusMsg');
+    var payload = collect();
+
+    btn.disabled = true;
+    statusMsg.className = 'status-msg';
+    statusMsg.textContent = '保存中…';
+
+    fetch(CONTENT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Password': state.password },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) {
+        if (r.status === 401) throw new Error('unauthorized');
+        if (!r.ok) throw new Error('save_failed');
+        return r.json();
+      })
+      .then(function () {
+        statusMsg.className = 'status-msg ok';
+        statusMsg.textContent = '✓ 已保存，网站几秒内更新';
+        try { localStorage.setItem(PW_KEY, state.password); } catch (e) {}
+        state.data = payload;
+      })
+      .catch(function (err) {
+        statusMsg.className = 'status-msg err';
+        if (err.message === 'unauthorized') {
+          statusMsg.textContent = '✗ 密码不对，联系 Daniel 确认';
+        } else {
+          statusMsg.textContent = '✗ 保存失败，网络问题或后台没配置好，重试一下';
+        }
+      })
+      .finally(function () {
+        btn.disabled = false;
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
