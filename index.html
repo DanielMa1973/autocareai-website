@@ -217,6 +217,30 @@
     .module-card p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
     /* ROI CALCULATOR */
+    /* COST vs COVERAGE CARD */
+    .cost-card { max-width: 760px; margin: 0 auto 1.75rem; background: var(--navy); border-radius: 16px; padding: 1.75rem; color: var(--white); }
+    .cost-head { text-align: center; margin-bottom: 1.25rem; }
+    .cost-head h3 { font-size: clamp(17px, 2.6vw, 21px); font-weight: 700; line-height: 1.4; letter-spacing: -0.3px; }
+    .cost-head h3 span { color: var(--gold); }
+    .cost-head p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 0.35rem; }
+    .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .cost-table th, .cost-table td { padding: 10px 12px; text-align: left; border-bottom: 0.5px solid rgba(255,255,255,0.1); vertical-align: top; }
+    .cost-table th { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.3px; }
+    .cost-table td:first-child { color: rgba(255,255,255,0.6); white-space: nowrap; }
+    .cost-table td { color: rgba(255,255,255,0.8); }
+    .cost-table td.ai { color: var(--gold); font-weight: 600; }
+    .cost-table tr:last-child td { border-bottom: none; }
+    .cost-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1.25rem; }
+    .cost-foot div { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.8rem 1rem; font-size: 12.5px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .cost-foot strong { display: block; color: var(--white); font-size: 13.5px; margin-bottom: 2px; }
+    .cost-note { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 0.9rem; text-align: center; }
+    @media (max-width: 560px) {
+      .cost-card { padding: 1.25rem 1rem; }
+      .cost-table th, .cost-table td { padding: 8px 6px; font-size: 12px; }
+      .cost-table td:first-child { white-space: normal; }
+      .cost-foot { grid-template-columns: 1fr; }
+    }
+
     .roi-calc { max-width: 760px; margin: 0 auto; background: var(--white); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.75rem; align-items: center; box-shadow: 0 4px 24px rgba(15,30,60,0.06); }
     .roi-inputs { display: flex; flex-direction: column; gap: 0.9rem; }
     .roi-inputs label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 12.5px; color: var(--text-muted); font-weight: 500; }
@@ -469,6 +493,26 @@
     <div class="section-header">
       <h2>算一笔账：接不住的咨询，一个月大概值多少钱</h2>
       <p>填的是你门店自己的数字，不是我们的——自己算一遍，比听我们说更有说服力</p>
+    </div>
+    <div class="cost-card">
+      <div class="cost-head">
+        <h3>不到一个前台 <span>6%</span> 的成本，<span>24 小时</span>在线</h3>
+        <p>它不抢前台的饭碗，是给前台配的帮手</p>
+      </div>
+      <table class="cost-table">
+        <thead><tr><th></th><th>真人前台</th><th>AI 服务顾问</th></tr></thead>
+        <tbody>
+          <tr><td>月成本</td><td>$3,333–5,000</td><td class="ai">$199 起</td></tr>
+          <tr><td>每周在线</td><td>40–48 小时</td><td class="ai">168 小时</td></tr>
+          <tr><td>同时接待</td><td>一次一位</td><td class="ai">不限人数</td></tr>
+          <tr><td>语言</td><td>看前台会说什么</td><td class="ai">中英文随时切换</td></tr>
+        </tbody>
+      </table>
+      <div class="cost-foot">
+        <div><strong>上班时，帮前台分担</strong>前台忙着接待到店、接电话，线上咨询由 AI 秒回，常见问题不再占用人手。</div>
+        <div><strong>下班后，替你守店</strong>一周约 75% 的时间门店没人，晚上和周末的咨询照样接住、约进店。</div>
+      </div>
+      <p class="cost-note">* 前台成本按年薪 $40,000–60,000 估算；在线时间按每周营业 5–6 天、每天 8 小时计算。</p>
     </div>
     <div class="roi-calc">
       <div class="roi-inputs">
